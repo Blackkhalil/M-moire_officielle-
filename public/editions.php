@@ -88,7 +88,7 @@ require_once __DIR__ . '/../app/editions.php';
                 </tbody>
             </table>
         </div>
-        <a href="dashboard.php" class="btn btn-outline-primary mt-3"><i class="fa-solid fa-arrow-left me-1"></i>Retour au tableau de bord</a>
+        
     </div>
 </section>
 <footer class="footer-modern">

@@ -60,9 +60,15 @@ require_once __DIR__ . '/../app/projets_edition.php';
         </div>
         <?php else: ?>
         <div class="action-card">
-            <h4 class="mb-3"><i class="fa-solid fa-list me-2"></i>Liste des projets</h4>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0"><i class="fa-solid fa-list me-2"></i>Liste des projets</h4>
+                <div class="d-flex gap-2">
+                    <label class="form-label mb-0 me-2">Filtrer</label>
+                    <input type="text" class="form-control" id="filterInput" placeholder="Nom, catégorie, groupe..." style="max-width:280px;">
+                </div>
+            </div>
             <div class="table-responsive">
-                <table class="table align-middle table-hover">
+                <table class="table align-middle table-hover" id="projectsTable">
                     <thead>
                         <tr>
                             <th>Nom du projet</th>
@@ -70,6 +76,8 @@ require_once __DIR__ . '/../app/projets_edition.php';
                             <th>Groupe</th>
                             <th>Membres</th>
                             <th>Description</th>
+                            <th>Présentation</th>
+                            <th>Télécharger</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,6 +101,30 @@ require_once __DIR__ . '/../app/projets_edition.php';
                             </td>
                             <td>
                                 <small><?= htmlspecialchars(substr($projet['description'], 0, 100)) ?><?= strlen($projet['description']) > 100 ? '...' : '' ?></small>
+                            </td>
+                            <td>
+                                <?php $pres = $presentations_map[$projet['id']] ?? null; ?>
+                                <?php if ($pres): ?>
+                                    <div>
+                                        <i class="fa-solid fa-file-powerpoint text-primary me-1"></i>
+                                        <strong><?= htmlspecialchars($pres['nom_fichier']) ?></strong>
+                                        <br>
+                                        <small class="text-muted"><?= number_format($pres['taille_fichier'] / 1024 / 1024, 2) ?> MB</small>
+                                    </div>
+                                <?php else: ?>
+                                    <span class="text-muted">Aucune présentation</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php if (!empty($pres)): ?>
+                                    <a href="download_powerpoint.php?id=<?= $pres['id'] ?>" class="btn btn-sm btn-info">
+                                        <i class="fa-solid fa-download"></i>
+                                    </a>
+                                <?php else: ?>
+                                    <button class="btn btn-sm btn-secondary" disabled title="Aucun fichier">
+                                        <i class="fa-solid fa-download"></i>
+                                    </button>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -123,9 +155,7 @@ require_once __DIR__ . '/../app/projets_edition.php';
         </div>
         <?php endif; ?>
         
-        <a href="dashboard.php" class="btn btn-outline-primary mt-3">
-            <i class="fa-solid fa-arrow-left me-1"></i>Retour au tableau de bord
-        </a>
+        
     </div>
 </section>
 <footer class="footer-modern">
@@ -142,5 +172,20 @@ require_once __DIR__ . '/../app/projets_edition.php';
     </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Filtre en temps réel
+document.addEventListener('DOMContentLoaded', function() {
+  const input = document.getElementById('filterInput');
+  const table = document.getElementById('projectsTable');
+  if (!input || !table) return;
+  input.addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    for (const row of table.tBodies[0].rows) {
+      const text = row.innerText.toLowerCase();
+      row.style.display = text.includes(q) ? '' : 'none';
+    }
+  });
+});
+</script>
 </body>
 </html>
