@@ -80,6 +80,7 @@ require_once __DIR__ . '/../app/editions.php';
                         <td><?= htmlspecialchars($edition['date_debut']) ?></td>
                         <td><?= htmlspecialchars($edition['date_fin']) ?></td>
                         <td>
+                            <a href="projets_edition.php?id=<?= $edition['id'] ?>" class="btn btn-info btn-sm me-1" title="Voir les projets"><i class="fa-solid fa-eye"></i></a>
                             <a href="?supprimer=<?= $edition['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette édition ?')"><i class="fa-solid fa-trash"></i></a>
                         </td>
                     </tr>
