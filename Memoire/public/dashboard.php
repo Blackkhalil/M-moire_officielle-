@@ -92,6 +92,15 @@ $role = $user['role'];
                     </div>
                 </div>
             </a>
+            <a class="action-card" href="gestion_powerpoint.php">
+                <div class="action-card-header">
+                    <div class="action-card-icon"><i class="fa-solid fa-file-powerpoint"></i></div>
+                    <div>
+                        <div class="action-card-title">Gestion des présentations</div>
+                        <p class="action-card-description">Validez et téléchargez les présentations PowerPoint.</p>
+                    </div>
+                </div>
+            </a>
         <?php elseif ($role === 'etudiant'): ?>
             <a class="action-card" href="soumettre_projet.php">
                 <div class="action-card-header">
@@ -108,6 +117,15 @@ $role = $user['role'];
                     <div>
                         <div class="action-card-title">Soumettre un rapport</div>
                         <p class="action-card-description">Déposez votre rapport PDF.</p>
+                    </div>
+                </div>
+            </a>
+            <a class="action-card" href="soumettre_powerpoint.php">
+                <div class="action-card-header">
+                    <div class="action-card-icon"><i class="fa-solid fa-file-powerpoint"></i></div>
+                    <div>
+                        <div class="action-card-title">Soumettre une présentation</div>
+                        <p class="action-card-description">Déposez votre présentation PowerPoint.</p>
                     </div>
                 </div>
             </a>
