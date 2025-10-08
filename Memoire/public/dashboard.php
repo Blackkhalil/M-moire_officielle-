@@ -83,6 +83,15 @@ $role = $user['role'];
                     </div>
                 </div>
             </a>
+            <a class="action-card" href="projets_edition.php">
+                <div class="action-card-header">
+                    <div class="action-card-icon"><i class="fa-solid fa-list-check"></i></div>
+                    <div>
+                        <div class="action-card-title">Projets par édition</div>
+                        <p class="action-card-description">Consultez tous les projets d'une édition SEIC.</p>
+                    </div>
+                </div>
+            </a>
         <?php elseif ($role === 'etudiant'): ?>
             <a class="action-card" href="soumettre_projet.php">
                 <div class="action-card-header">
@@ -99,6 +108,16 @@ $role = $user['role'];
                     <div>
                         <div class="action-card-title">Soumettre un rapport</div>
                         <p class="action-card-description">Déposez votre rapport PDF.</p>
+                    </div>
+                </div>
+            </a>
+        <?php elseif ($role === 'visiteur'): ?>
+            <a class="action-card" href="visitor_projects.php">
+                <div class="action-card-header">
+                    <div class="action-card-icon"><i class="fa-solid fa-eye"></i></div>
+                    <div>
+                        <div class="action-card-title">Voir les projets</div>
+                        <p class="action-card-description">Consultez tous les projets, groupes et salles.</p>
                     </div>
                 </div>
             </a>

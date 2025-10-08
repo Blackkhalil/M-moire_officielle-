@@ -36,10 +36,16 @@ require_once __DIR__ . '/../app/soumission_projet.php';
                         <p class="login-subtitle">Proposez un nouveau projet pour la SEIC</p>
         </div>
         <?php if ($success): ?>
-                        <div class="alert alert-success login-alert"><i class="fa-solid fa-circle-check me-1"></i><?= htmlspecialchars($success) ?></div>
+                        <div class="alert alert-success login-alert">
+                            <i class="fa-solid fa-circle-check me-2"></i>
+                            <strong>Succès !</strong> <?= htmlspecialchars($success) ?>
+                        </div>
         <?php endif; ?>
         <?php if ($error): ?>
-                        <div class="alert alert-danger login-alert"><i class="fa-solid fa-circle-exclamation me-1"></i><?= htmlspecialchars($error) ?></div>
+                        <div class="alert alert-danger login-alert">
+                            <i class="fa-solid fa-circle-exclamation me-2"></i>
+                            <strong>Erreur !</strong> <?= htmlspecialchars($error) ?>
+                        </div>
         <?php endif; ?>
                     <form method="post" class="login-form" autocomplete="on">
                         <div class="form-group">
@@ -52,11 +58,27 @@ require_once __DIR__ . '/../app/soumission_projet.php';
                         </div>
                         <div class="form-group">
                             <label for="categorie" class="form-label"><i class="fa-solid fa-tags me-1"></i> Catégorie</label>
-                            <input type="text" class="form-control" id="categorie" name="categorie" placeholder="Catégorie">
+                            <select class="form-control" id="categorie" name="categorie" required>
+                                <option value="">Sélectionner une catégorie</option>
+                                <option value="Projet énergie et environnement">Projet énergie et environnement</option>
+                                <option value="Projet technologie et numérique">Projet technologie et numérique</option>
+                                <option value="Projet santé et biotechnologie">Projet santé et biotechnologie</option>
+                                <option value="Projet industrie et mobilité">Projet industrie et mobilité</option>
+                                <option value="Projet commerce et services">Projet commerce et services</option>
+                                <option value="Projet agroalimentaire et innovation agricole">Projet agroalimentaire et innovation agricole</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="membres" class="form-label"><i class="fa-solid fa-users me-1"></i> Membres du groupe</label>
-                            <input type="text" class="form-control" id="membres" name="membres" placeholder="Membres du groupe">
+                            <label for="nom_groupe" class="form-label"><i class="fa-solid fa-users me-1"></i> Nom du groupe</label>
+                            <input type="text" class="form-control" id="nom_groupe" name="nom_groupe" placeholder="Nom du groupe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre_membres" class="form-label"><i class="fa-solid fa-user-group me-1"></i> Nombre de membres</label>
+                            <input type="number" class="form-control" id="nombre_membres" name="nombre_membres" placeholder="Nombre de membres" min="1" max="10" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="membres" class="form-label"><i class="fa-solid fa-list me-1"></i> Liste des membres</label>
+                            <textarea class="form-control" id="membres" name="membres" rows="3" placeholder="Listez tous les membres du groupe (un par ligne)"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="id_edition" class="form-label"><i class="fa-solid fa-calendar-days me-1"></i> Édition</label>
