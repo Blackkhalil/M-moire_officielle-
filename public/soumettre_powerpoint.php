@@ -33,7 +33,7 @@ require_once __DIR__ . '/../app/soumission_powerpoint.php';
                     <div class="text-center mb-3">
                         <div class="action-card-icon" style="margin:0 auto 1rem; width:60px; height:60px;"><i class="fa-solid fa-file-powerpoint"></i></div>
                         <h2 class="login-title">Soumettre une présentation</h2>
-                        <p class="login-subtitle">Déposez votre présentation PowerPoint</p>
+                        <p class="login-subtitle">Déposez votre présentation PowerPoint pour votre projet</p>
                     </div>
                     
                     <?php if ($success): ?>
@@ -44,35 +44,33 @@ require_once __DIR__ . '/../app/soumission_powerpoint.php';
                         <div class="alert alert-danger login-alert"><i class="fa-solid fa-circle-exclamation me-1"></i><?= htmlspecialchars($error) ?></div>
                     <?php endif; ?>
                     
-                    <form method="post" class="login-form" enctype="multipart/form-data" autocomplete="on">
+                    <form method="post" enctype="multipart/form-data" class="login-form" autocomplete="on">
                         <div class="form-group">
                             <label for="id_projet" class="form-label"><i class="fa-solid fa-lightbulb me-1"></i> Projet associé</label>
                             <select class="form-control" id="id_projet" name="id_projet" required>
                                 <option value="">Sélectionner un projet</option>
+                                <?php $selectedId = $_POST['id_projet'] ?? ''; ?>
                                 <?php foreach ($projets as $projet): ?>
-                                    <option value="<?= $projet['id'] ?>">
-                                        <?= htmlspecialchars($projet['nom']) ?> - SEIC <?= htmlspecialchars($projet['annee']) ?>
-                                    </option>
+                                    <option value="<?= $projet['id'] ?>" <?= ($selectedId !== '' && (string)$selectedId === (string)$projet['id']) ? 'selected' : '' ?>><?= htmlspecialchars($projet['nom']) ?> - <?= htmlspecialchars($projet['categorie']) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         
                         <div class="form-group">
                             <label for="presentation" class="form-label"><i class="fa-solid fa-file-powerpoint me-1"></i> Fichier PowerPoint</label>
-                            <input type="file" class="form-control" id="presentation" name="presentation" 
-                                   accept=".ppt,.pptx" required>
+                            <input type="file" class="form-control" id="presentation" name="presentation" accept=".ppt,.pptx" required>
                             <small class="form-text text-muted">
-                                Formats acceptés : .ppt et .pptx (Taille max : 50MB)
+                                <i class="fa-solid fa-info-circle me-1"></i>
+                                Formats acceptés : .ppt, .pptx | Taille maximale : 50MB
                             </small>
                         </div>
                         
                         <div class="alert alert-info">
-                            <i class="fa-solid fa-info-circle me-2"></i>
-                            <strong>Instructions :</strong>
-                            <ul class="mb-0 mt-2">
-                                <li>Assurez-vous que votre présentation est complète et prête</li>
-                                <li>Vérifiez que tous les éléments multimédias fonctionnent</li>
-                                <li>La présentation sera validée par les organisateurs</li>
+                            <h6><i class="fa-solid fa-lightbulb me-1"></i> Conseils pour votre présentation :</h6>
+                            <ul class="mb-0">
+                                <li>Assurez-vous que votre présentation est complète et bien structurée</li>
+                                <li>Vérifiez que tous les éléments multimédias fonctionnent correctement</li>
+                                <li>Le fichier sera vérifié par les organisateurs avant validation</li>
                             </ul>
                         </div>
                         
@@ -80,9 +78,6 @@ require_once __DIR__ . '/../app/soumission_powerpoint.php';
                             <i class="fa-solid fa-upload me-1"></i>Soumettre la présentation
                         </button>
                         
-                        <a href="dashboard.php" class="btn btn-outline-primary btn-export-submit mt-2">
-                            <i class="fa-solid fa-arrow-left me-1"></i>Retour
-                        </a>
                     </form>
                 </div>
             </div>

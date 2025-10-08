@@ -15,7 +15,10 @@ if (!$presentation_id) {
 
 // Récupérer les informations de la présentation
 $stmt = $pdo->prepare('
-    SELECT p.*, pr.nom as nom_projet 
+    SELECT 
+        p.*,
+        pr.nom as nom_projet,
+        pr.nom_groupe
     FROM presentations p
     JOIN projets pr ON p.id_projet = pr.id
     WHERE p.id = ?
@@ -28,22 +31,16 @@ if (!$presentation) {
     exit;
 }
 
-$file_path = $presentation['chemin_fichier'];
+$file_path = __DIR__ . '/../uploads/presentations/' . $presentation['chemin_fichier'];
 
-// Vérifier que le fichier existe
 if (!file_exists($file_path)) {
     die('Fichier non trouvé.');
 }
 
 // Définir les headers pour le téléchargement
-$file_name = $presentation['nom_fichier'];
-$file_size = filesize($file_path);
-$file_type = $presentation['type_mime'];
-
-// Headers pour forcer le téléchargement
-header('Content-Type: ' . $file_type);
-header('Content-Disposition: attachment; filename="' . $file_name . '"');
-header('Content-Length: ' . $file_size);
+header('Content-Type: application/octet-stream');
+header('Content-Disposition: attachment; filename="' . $presentation['nom_fichier'] . '"');
+header('Content-Length: ' . filesize($file_path));
 header('Cache-Control: must-revalidate');
 header('Pragma: public');
 
