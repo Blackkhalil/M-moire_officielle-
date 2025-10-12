@@ -9,7 +9,7 @@
  * - Upload sécurisé dans le dossier uploads/rapports/
  * - Enregistrement en base de données avec état "en_attente"
  * 
- * @author Votre nom
+ * @author Khalil
  * @version 1.0
  */
 

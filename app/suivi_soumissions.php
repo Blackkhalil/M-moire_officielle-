@@ -8,7 +8,7 @@
  * - Consulter les statistiques de leurs soumissions
  * - Recevoir des commentaires des organisateurs
  * 
- * @author Votre nom
+ * @author Khalil
  * @version 1.0
  */
 
