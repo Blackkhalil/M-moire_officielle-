@@ -1,0 +1,60 @@
+# Fichiers sensibles et temporaires
+*.log
+*.tmp
+*.temp
+
+# Fichiers de configuration locaux
+config/local.php
+.env
+.env.local
+
+# Dossiers de cache et logs
+logs/
+cache/
+tmp/
+
+# Fichiers d'upload (garder la structure mais pas les fichiers)
+uploads/rapports/*.pdf
+uploads/presentations/*.pptx
+uploads/rapports/*.docx
+uploads/presentations/*.ppt
+
+# Fichiers de sauvegarde
+*.bak
+*.backup
+*.old
+
+# Fichiers de développement
+debug_*.php
+test_*.php
+temp_*.php
+
+# IDE et éditeurs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Système d'exploitation
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node.js (si utilisé pour le build)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Composer (si utilisé)
+vendor/
+composer.lock
+
+# Fichiers de base de données de test
+*.sqlite
+*.db
+
+# Fichiers de configuration spécifiques à l'environnement
+config/production.php
+config/staging.php

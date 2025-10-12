@@ -36,7 +36,7 @@ try {
 	}
 	$filename = $row['fichier'];
 	$displayName = preg_replace('/\s+/', '_', $row['projet_nom']) . '.pdf';
-	$filePath = rtrim(UPLOADS_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $filename;
+	$filePath = rtrim(UPLOADS_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'rapports' . DIRECTORY_SEPARATOR . $filename;
 	
 	// Security: ensure file is under uploads directory
 	$realBase = realpath(UPLOADS_DIR);

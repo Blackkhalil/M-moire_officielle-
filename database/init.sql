@@ -21,6 +21,7 @@ CREATE TABLE groupes (
     nom VARCHAR(100) NOT NULL,
     id_edition INT,
     id_salle INT,
+    nombre_membres INT DEFAULT 0,
     FOREIGN KEY (id_edition) REFERENCES editions(id),
     FOREIGN KEY (id_salle) REFERENCES salles(id)
 );
@@ -57,7 +58,9 @@ CREATE TABLE rapports (
 INSERT INTO utilisateurs (nom, email, mot_de_passe, role) VALUES
 ('Alice Dupont', 'alice@lbs.tg', 'test', 'etudiant'),
 ('Bob Organisateur', 'bob@lbs.tg', 'test', 'organisateur'),
-('Visiteur Test', 'visiteur@lbs.tg', 'test', 'visiteur');
+('Visiteur Test', 'visiteur@lbs.tg', 'test', 'visiteur'),
+('Marie Dubois', 'marie@lbs.tg', 'test', 'etudiant'),
+('Sophie Laurent', 'sophie@lbs.tg', 'test', 'etudiant');
 
 INSERT INTO editions (annee, description, date_debut, date_fin) VALUES
 (2023, 'SEIC 2023 - Innovation et Entrepreneuriat', '2023-06-01', '2023-06-05'),
@@ -73,7 +76,9 @@ INSERT INTO groupes (nom, id_edition, id_salle) VALUES
 
 INSERT INTO projets (nom, description, categorie, membres, id_edition) VALUES
 ('Projet Innovant', 'Un projet sur l''innovation.', 'Technologie', 'Alice Dupont, Jean K.', 1),
-('Projet Social', 'Projet à impact social.', 'Impact Social', 'Bob Organisateur, Marie L.', 2);
+('Projet Social', 'Projet à impact social.', 'Impact Social', 'Bob Organisateur, Marie L.', 2),
+('Application Mobile SEIC', 'Développement d\'une application mobile pour la SEIC', 'Technologie', 'Alice Dupont, Marie Dubois', 2),
+('Projet Écologique Campus', 'Solution pour réduire l\'empreinte carbone', 'Environnement', 'Alice Dupont, Sophie Laurent', 2);
 
 INSERT INTO rapports (id_projet, date_soumission, fichier, etat_validation, commentaire) VALUES
 (1, '2023-06-02 10:00:00', 'rapport1.pdf', 'valide', 'Très bon rapport.'),
