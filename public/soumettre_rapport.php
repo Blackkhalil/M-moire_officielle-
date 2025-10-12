@@ -25,45 +25,59 @@ require_once __DIR__ . '/../app/soumission_rapport.php';
         </a>
     </div>
 </nav>
-<section class="import-section">
+<section class="login-section">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
-                <div class="import-card">
-        <div class="text-center mb-3">
-                        <div class="import-icon"><i class="fa-solid fa-file-upload"></i></div>
-                        <h2 class="import-title">Soumettre un rapport</h2>
-                        <p class="import-subtitle">Déposez votre rapport PDF pour la SEIC</p>
-        </div>
-        <?php if ($success): ?>
-                        <div class="alert alert-success import-alert"><i class="fa-solid fa-circle-check me-1"></i><?= htmlspecialchars($success) ?></div>
-        <?php endif; ?>
-        <?php if ($error): ?>
-                        <div class="alert alert-danger import-alert"><i class="fa-solid fa-circle-exclamation me-1"></i><?= htmlspecialchars($error) ?></div>
-        <?php endif; ?>
-                    <form method="post" enctype="multipart/form-data" class="import-form" autocomplete="on">
+                <div class="login-card">
+                    <div class="text-center mb-3">
+                        <div class="action-card-icon" style="margin:0 auto 1rem; width:60px; height:60px;"><i class="fa-solid fa-file-pdf"></i></div>
+                        <h2 class="login-title">Soumettre un rapport</h2>
+                        <p class="login-subtitle">Déposez votre rapport PDF pour votre projet</p>
+                    </div>
+                    
+                    <?php if ($success): ?>
+                        <div class="alert alert-success login-alert"><i class="fa-solid fa-circle-check me-1"></i><?= htmlspecialchars($success) ?></div>
+                    <?php endif; ?>
+                    
+                    <?php if ($error): ?>
+                        <div class="alert alert-danger login-alert"><i class="fa-solid fa-circle-exclamation me-1"></i><?= htmlspecialchars($error) ?></div>
+                    <?php endif; ?>
+                    
+                    <form method="post" enctype="multipart/form-data" class="login-form" autocomplete="on">
                         <div class="form-group">
-                            <label for="id_projet" class="form-label"><i class="fa-solid fa-lightbulb me-1"></i> Projet</label>
+                            <label for="id_projet" class="form-label"><i class="fa-solid fa-lightbulb me-1"></i> Projet associé</label>
                             <select class="form-control" id="id_projet" name="id_projet" required>
                                 <option value="">Sélectionner un projet</option>
+                                <?php $selectedId = $_POST['id_projet'] ?? ''; ?>
                                 <?php foreach ($projets as $projet): ?>
-                                    <option value="<?= $projet['id'] ?>"><?= htmlspecialchars($projet['nom']) ?></option>
+                                    <option value="<?= $projet['id'] ?>" <?= ($selectedId !== '' && (string)$selectedId === (string)$projet['id']) ? 'selected' : '' ?>><?= htmlspecialchars($projet['nom']) ?> - <?= htmlspecialchars($projet['categorie']) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        
                         <div class="form-group">
-                            <label for="fichier" class="form-label"><i class="fa-solid fa-file-pdf me-1"></i> Fichier PDF</label>
-                            <div class="file-upload-area">
-                                <input type="file" class="form-control file-input" id="fichier" name="fichier" accept="application/pdf" required>
-                                <div class="file-upload-text">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <p>Glissez-déposez votre fichier PDF ici ou cliquez pour sélectionner</p>
-                                    <small>Format accepté : PDF</small>
-                                </div>
-                            </div>
+                            <label for="rapport" class="form-label"><i class="fa-solid fa-file-pdf me-1"></i> Fichier PDF</label>
+                            <input type="file" class="form-control" id="rapport" name="rapport" accept=".pdf" required>
+                            <small class="form-text text-muted">
+                                <i class="fa-solid fa-info-circle me-1"></i>
+                                Format accepté : .pdf | Taille maximale : 50MB
+                            </small>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-import-submit"><i class="fa-solid fa-paper-plane me-1"></i>Soumettre</button>
-                        <a href="dashboard.php" class="btn btn-outline-primary btn-export-submit mt-2"><i class="fa-solid fa-arrow-left me-1"></i>Retour</a>
+                        
+                        <div class="alert alert-info">
+                            <h6><i class="fa-solid fa-lightbulb me-1"></i> Conseils pour votre rapport :</h6>
+                            <ul class="mb-0">
+                                <li>Assurez-vous que votre rapport est complet et bien structuré</li>
+                                <li>Vérifiez que tous les éléments sont lisibles et bien formatés</li>
+                                <li>Le fichier sera vérifié par les organisateurs avant validation</li>
+                            </ul>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-login-submit">
+                            <i class="fa-solid fa-upload me-1"></i>Soumettre le rapport
+                        </button>
+                        
                     </form>
                 </div>
             </div>
@@ -84,23 +98,5 @@ require_once __DIR__ . '/../app/soumission_rapport.php';
     </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-const fileInput = document.getElementById('fichier');
-const fileUploadArea = document.querySelector('.file-upload-area');
-const fileUploadText = document.querySelector('.file-upload-text');
-if (fileUploadArea && fileInput) {
-  fileUploadArea.addEventListener('dragover', (e) => { e.preventDefault(); fileUploadArea.classList.add('dragover'); });
-  fileUploadArea.addEventListener('dragleave', () => fileUploadArea.classList.remove('dragover'));
-  fileUploadArea.addEventListener('drop', (e) => { e.preventDefault(); fileUploadArea.classList.remove('dragover'); const files = e.dataTransfer.files; if (files.length > 0) { fileInput.files = files; updateFileDisplay(); } });
-  fileInput.addEventListener('change', updateFileDisplay);
-}
-function updateFileDisplay() {
-  if (fileInput.files.length > 0) {
-    const file = fileInput.files[0];
-    fileUploadText.innerHTML = '<i class="fas fa-file-pdf"></i><p><strong>' + file.name + '</strong></p><small>Taille : ' + (file.size/1024/1024).toFixed(2) + ' MB</small>';
-    fileUploadArea.classList.add('has-file');
-  }
-}
-</script>
 </body>
 </html> 

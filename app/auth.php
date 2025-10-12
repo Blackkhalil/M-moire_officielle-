@@ -1,4 +1,18 @@
 <?php
+/**
+ * Système d'authentification et de gestion des sessions utilisateur
+ * 
+ * Ce fichier gère tout ce qui concerne l'authentification :
+ * - Vérification des identifiants de connexion
+ * - Gestion des sessions utilisateur sécurisées
+ * - Vérification des rôles (étudiant, organisateur, admin)
+ * - Protection des pages nécessitant une authentification
+ * 
+ * @author Votre nom
+ * @version 1.0
+ */
+
+// On démarre la session pour pouvoir stocker les informations de l'utilisateur
 session_start();
 require_once __DIR__ . '/../config/config.php';
 

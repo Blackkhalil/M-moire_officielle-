@@ -23,7 +23,7 @@ if (!$row) {
 	exit;
 }
 $filename = $row['fichier'];
-$filePath = rtrim(UPLOADS_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $filename;
+$filePath = rtrim(UPLOADS_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'rapports' . DIRECTORY_SEPARATOR . $filename;
 $realBase = realpath(UPLOADS_DIR);
 $realFile = realpath($filePath);
 if ($realFile === false || strpos($realFile, $realBase) !== 0 || !is_file($realFile)) {
