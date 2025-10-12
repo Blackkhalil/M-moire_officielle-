@@ -8,7 +8,7 @@
  * - Vérification des rôles (étudiant, organisateur, admin)
  * - Protection des pages nécessitant une authentification
  * 
- * @author Votre nom
+ * @author Khalil
  * @version 1.0
  */
 

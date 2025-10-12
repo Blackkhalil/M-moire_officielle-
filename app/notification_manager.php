@@ -8,7 +8,7 @@
  * - De marquer les notifications comme lues/non lues
  * - De récupérer les notifications non lues pour l'affichage en temps réel
  * 
- * @author Votre nom
+ * @author Khalil
  * @version 1.0
  */
 

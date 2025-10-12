@@ -183,9 +183,9 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
 ## 👨‍💻 Auteur
 
-**Votre Nom**
-- Email : votre.email@example.com
-- GitHub : [@votre-username](https://github.com/votre-username)
+**Khalil**
+- Email : sibikhalil06@gmail.com
+- GitHub : [@Blackkhalil](https://github.com/Blackkhalil)
 
 ## 🙏 Remerciements
 

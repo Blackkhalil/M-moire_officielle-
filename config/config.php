@@ -8,7 +8,7 @@
  * - Configuration des chemins et URLs
  * - Paramètres d'optimisation pour les performances
  * 
- * @author Votre nom
+ * @author Khalil
  * @version 1.0
  */
 

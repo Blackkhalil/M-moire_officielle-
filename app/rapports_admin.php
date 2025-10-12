@@ -8,7 +8,7 @@
  * - Envoyer des notifications automatiques aux étudiants
  * - Consulter les statistiques de soumission
  * 
- * @author Votre nom
+ * @author Khalil
  * @version 1.0
  */
 
