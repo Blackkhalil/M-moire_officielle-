@@ -1,0 +1,63 @@
+═══════════════════════════════════════════════════════════════
+   COMMANDES GITHUB - Pousser votre projet
+═══════════════════════════════════════════════════════════════
+
+✅ COMMIT CRÉÉ AVEC SUCCÈS !
+
+Maintenant, pour envoyer vers GitHub, SUIVEZ CES ÉTAPES :
+
+═══════════════════════════════════════════════════════════════
+
+📋 ÉTAPE 1 : Créer un Repository sur GitHub
+
+   1. Allez sur : https://github.com/new
+   2. Nom du repository : SEIC-LBS (ou le nom que vous voulez)
+   3. Description : "Plateforme de gestion SEIC LBS"
+   4. Choisissez : Public ou Private
+   5. ❌ NE COCHEZ PAS "Add a README file"
+   6. Cliquez sur "Create repository"
+
+═══════════════════════════════════════════════════════════════
+
+📋 ÉTAPE 2 : Copier les Commandes GitHub
+
+   GitHub va vous donner des commandes. IGNOREZ-LES.
+   Utilisez plutôt :
+
+═══════════════════════════════════════════════════════════════
+
+🚀 OPTION A : Si c'est votre PREMIER repository (vide)
+
+   git remote add origin https://github.com/VOTRE_USERNAME/SEIC-LBS.git
+   git push -u origin main
+
+═══════════════════════════════════════════════════════════════
+
+🚀 OPTION B : Si vous avez DÉJÀ des commits sur GitHub
+
+   git remote add origin https://github.com/VOTRE_USERNAME/SEIC-LBS.git
+   git branch -M main
+   git push -u origin main --force
+
+═══════════════════════════════════════════════════════════════
+
+⚠️ REMPLACEZ : VOTRE_USERNAME par votre nom d'utilisateur GitHub
+⚠️ REMPLACEZ : SEIC-LBS par votre nom de repository
+
+═══════════════════════════════════════════════════════════════
+
+💡 EXEMPLE :
+
+   git remote add origin https://github.com/Blackkhalil/SEIC-LBS.git
+   git push -u origin main
+
+═══════════════════════════════════════════════════════════════
+
+📞 BESOIN D'AIDE ?
+
+   1. Ouvrez une invite de commande (cmd)
+   2. Allez dans : C:\wamp64\www\M-moire_officielle--RP
+   3. Exécutez les commandes ci-dessus
+
+═══════════════════════════════════════════════════════════════
+
