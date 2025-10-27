@@ -1,0 +1,37 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Fichiers uploadés (ne pas versionner)
+uploads/*
+!uploads/index.php
+uploads/rapports/*
+!uploads/rapports/index.php
+uploads/presentations/*
+!uploads/presentations/index.php
+
+# Logs
+*.log
+error_log
+
+# Configuration locale (si différente de production)
+# config/config_local.php
+
+# Fichiers temporaires
+*.tmp
+~*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Node modules (si vous ajoutez du JS plus tard)
+node_modules/
+
+# Variables d'environnement sensibles
+.env
+.env.local
