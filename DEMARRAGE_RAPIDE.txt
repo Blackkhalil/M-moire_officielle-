@@ -1,0 +1,86 @@
+═══════════════════════════════════════════════════════════════
+   SEIC LBS - GUIDE DE DÉMARRAGE RAPIDE
+═══════════════════════════════════════════════════════════════
+
+📌 ÉTAPES À SUIVRE :
+
+1️⃣  DÉMARRER WAMP
+   • Cliquez sur l'icône WAMP dans la barre des tâches
+   • Attendez que l'icône soit VERTE ✅
+   • Si orange/rouge, cliquez sur "Start All Services"
+
+2️⃣  CRÉER LA BASE DE DONNÉES
+   • Cliquez sur WAMP → "phpMyAdmin"
+   • Créez une base nommée : seic_lbs
+   • Importez le fichier : database/init.sql
+
+3️⃣  LANCER L'APPLICATION
+   • OUVREZ : DEMARRER_PROJET.bat (double-clic)
+   • OU allez sur : http://localhost/M-moire_officielle--RP/htdocs/
+
+═══════════════════════════════════════════════════════════════
+
+👥 COMPTES DE TEST :
+
+ÉTUDIANT :
+   Email: alice@lbs.tg
+   Mot de passe: test
+
+ORGANISATEUR :
+   Email: bob@lbs.tg
+   Mot de passe: test
+
+VISITEUR :
+   Email: visiteur@lbs.tg
+   Mot de passe: test
+
+═══════════════════════════════════════════════════════════════
+
+📁 FICHIERS IMPORTANTS :
+
+• GUIDE_DEMARRAGE.md    → Guide complet détaillé
+• DEMARRER_PROJET.bat   → Script de démarrage rapide
+• config/config.php     → Configuration de la base de données
+• database/init.sql     → Script SQL à importer
+
+═══════════════════════════════════════════════════════════════
+
+⚠️ RÉSOLUTION DE PROBLÈMES :
+
+PROBLÈME : Page blanche
+→ Vérifiez que PHP est démarré dans WAMP
+
+PROBLÈME : Erreur de connexion BDD
+→ Vérifiez que MySQL est démarré dans WAMP
+
+PROBLÈME : Port 80 déjà utilisé
+→ Utilisez le port 8080 :
+  http://localhost:8080/M-moire_officielle--RP/htdocs/
+
+═══════════════════════════════════════════════════════════════
+
+🎯 CONFIGURATION DÉJÀ FAITE :
+
+✅ Base de données : localhost
+✅ Nom : seic_lbs
+✅ Utilisateur : root
+✅ Mot de passe : (vide)
+
+═══════════════════════════════════════════════════════════════
+
+🚀 DASHBOARDS RESPONSIVE :
+
+✅ Dashboard Étudiant
+✅ Dashboard Organisateur  
+✅ Dashboard Visiteur
+
+Tous sont maintenant 100% responsive pour mobile !
+
+═══════════════════════════════════════════════════════════════
+
+📞 BESOIN D'AIDE ?
+
+Consultez : GUIDE_DEMARRAGE.md pour plus de détails
+
+═══════════════════════════════════════════════════════════════
+
