@@ -1,0 +1,21 @@
+# Sécurité pour le dossier uploads/presentations
+# Empêcher l'exécution de scripts PHP dans ce dossier
+<Files "*.php">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Empêcher l'accès direct aux fichiers
+Options -Indexes
+
+# Types de fichiers autorisés
+<FilesMatch "\.(ppt|pptx)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Bloquer tous les autres types de fichiers
+<FilesMatch "^(?!.*\.(ppt|pptx)$).*$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
