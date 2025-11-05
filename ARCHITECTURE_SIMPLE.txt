@@ -1,0 +1,272 @@
+═══════════════════════════════════════════════════════════════════════════════
+   ARCHITECTURE CLIENT-SERVEUR - PLATEFORME SEIC LBS
+═══════════════════════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          CLIENT (NAVIGATEUR WEB)                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
+│  │   HTML5      │  │   CSS3 +     │  │  JavaScript  │  │ Font Awesome │  │
+│  │  Structure   │  │  Bootstrap   │  │  Interactions│  │   Icônes     │  │
+│  │              │  │  5.3 Responsive│ │  AJAX/Fetch │  │              │  │
+│  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    │ HTTP/HTTPS
+                                    │ Requêtes GET/POST
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                       SERVEUR WEB (Apache/WAMP)                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌──────────────────────────────────────────────────────────────────────┐  │
+│  │                    INTERPRÉTEUR PHP 8.0+                            │  │
+│  └──────────────────────────────────────────────────────────────────────┘  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    │
+                    ┌───────────────┴───────────────┐
+                    │                               │
+                    ▼                               ▼
+┌───────────────────────────────────┐  ┌───────────────────────────────────┐
+│      FRONTEND (htdocs/)           │  │      BACKEND (app/)               │
+├───────────────────────────────────┤  ├───────────────────────────────────┤
+│                                   │  │                                   │
+│  ┌─────────────────────────────┐  │  │  ┌─────────────────────────────┐  │
+│  │  Pages PHP                  │  │  │  │  Logique Métier            │  │
+│  │  • index.php                │  │  │  │  • auth.php                │  │
+│  │  • login.php                │  │  │  │  • soumission_*.php        │  │
+│  │  • dashboard.php            │  │  │  │  • rapports_admin.php      │  │
+│  │  • soumettre_rapport.php    │  │  │  │  • gestion_*.php           │  │
+│  │  • rapports_admin.php       │  │  │  │  • notification_manager.php│  │
+│  │  • suivi_soumissions.php    │  │  │  │  • suivi_soumissions.php   │  │
+│  └─────────────────────────────┘  │  │  └─────────────────────────────┘  │
+│                                   │  │                                   │
+│  ┌─────────────────────────────┐  │  │                                   │
+│  │  API REST                   │  │  │                                   │
+│  │  • api/notifications.php    │  │  │                                   │
+│  └─────────────────────────────┘  │  │                                   │
+│                                   │  │                                   │
+│  ┌─────────────────────────────┐  │  │                                   │
+│  │  Ressources Statiques       │  │  │                                   │
+│  │  • css/modern-style.css     │  │  │                                   │
+│  │  • images/logo-lbs.png      │  │  │                                   │
+│  │  • js/                      │  │  │                                   │
+│  └─────────────────────────────┘  │  │                                   │
+│                                   │  │                                   │
+└───────────────────────────────────┘  └───────────────────────────────────┘
+                    │                               │
+                    │                               │
+                    └───────────────┬───────────────┘
+                                    │
+                                    │ require_once
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    CONFIGURATION (config/)                                  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌──────────────────────────────────────────────────────────────────────┐  │
+│  │  config.php                                                          │  │
+│  │  • Connexion PDO à MySQL                                             │  │
+│  │  • Configuration des chemins                                         │  │
+│  │  • Variables d'environnement                                         │  │
+│  └──────────────────────────────────────────────────────────────────────┘  │
+│                                                                             │
+│  ┌──────────────────────────────────────────────────────────────────────┐  │
+│  │  upload_config.php                                                   │  │
+│  │  • Limites de taille (50MB)                                          │  │
+│  │  • Extensions autorisées                                             │  │
+│  └──────────────────────────────────────────────────────────────────────┘  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    │ Connexion PDO
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    BASE DE DONNÉES (MySQL/MariaDB)                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
+│  │ utilisateurs │  │   projets    │  │   rapports   │  │presentations │  │
+│  │              │  │              │  │              │  │              │  │
+│  │ • id         │  │ • id         │  │ • id         │  │ • id         │  │
+│  │ • nom        │  │ • nom        │  │ • id_projet  │  │ • id_projet  │  │
+│  │ • email      │  │ • description│  │ • fichier    │  │ • fichier    │  │
+│  │ • mot_de_passe│  │ • categorie │  │ • etat_valid │  │ • etat_valid │  │
+│  │ • role       │  │ • membres    │  │ • date_soumis│  │ • date_soumis│  │
+│  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘  │
+│                                                                             │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
+│  │  editions    │  │   groupes    │  │    salles    │  │notifications │  │
+│  │              │  │              │  │              │  │              │  │
+│  │ • id         │  │ • id         │  │ • id         │  │ • id         │  │
+│  │ • annee      │  │ • nom        │  │ • nom        │  │ • user_id    │  │
+│  │ • description│  │ • id_edition │  │ • localisation│  │ • title      │  │
+│  │ • date_debut │  │ • id_salle   │  │              │  │ • message    │  │
+│  │ • date_fin   │  │ • nb_membres │  │              │  │ • lu         │  │
+│  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    │ Stockage fichiers
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    STOCKAGE (uploads/)                                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌─────────────────────────────┐  ┌─────────────────────────────┐         │
+│  │  uploads/rapports/          │  │  uploads/presentations/     │         │
+│  │  • rapport_1_123456.pdf     │  │  • presentation_3_123.pptx  │         │
+│  │  • rapport_2_123457.pdf     │  │  • presentation_4_124.pptx  │         │
+│  │  • index.php (protection)   │  │  • index.php (protection)   │         │
+│  └─────────────────────────────┘  └─────────────────────────────┘         │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+                        FLUX DE DONNÉES PRINCIPAUX
+═══════════════════════════════════════════════════════════════════════════════
+
+1️⃣  CONNEXION UTILISATEUR
+   ┌─────────┐
+   │ Client  │
+   └────┬────┘
+        │ POST /login.php (email, password)
+        ▼
+   ┌─────────┐
+   │login.php│
+   └────┬────┘
+        │ Appelle app/auth.php
+        ▼
+   ┌─────────┐
+   │auth.php │──┐
+   └────┬────┘  │
+        │       │ SELECT utilisateurs WHERE email=?
+        ▼       │
+   ┌─────────┐  │
+   │  MySQL  │◄─┘
+   └────┬────┘
+        │ Retourne utilisateur
+        ▼
+   ┌─────────┐
+   │ Session │ Crée $_SESSION['user_id']
+   └────┬────┘
+        │ Redirect vers dashboard.php
+        ▼
+   ┌─────────┐
+   │ Client  │ Dashboard affiché
+   └─────────┘
+
+2️⃣  UPLOAD RAPPORT PDF
+   ┌─────────┐
+   │ Étudiant│
+   └────┬────┘
+        │ POST /soumettre_rapport.php (fichier PDF)
+        ▼
+   ┌─────────┐
+   │Frontend │
+   └────┬────┘
+        │ Appelle app/soumission_rapport.php
+        ▼
+   ┌─────────┐
+   │ Backend │ Valide fichier (extension, taille, type MIME)
+   └────┬────┘
+        │
+        ├──► uploads/rapports/ (sauvegarde fichier)
+        │
+        └──► MySQL INSERT INTO rapports
+                │
+                └──► Crée notification pour organisateur
+
+3️⃣  NOTIFICATIONS TEMPS RÉEL
+   ┌─────────┐
+   │ Client  │
+   └────┬────┘
+        │ setInterval (30s)
+        │ GET /api/notifications.php?action=get_unread
+        ▼
+   ┌─────────┐
+   │   API   │
+   └────┬────┘
+        │ Appelle app/notification_manager.php
+        ▼
+   ┌─────────┐
+   │NotifMgr │
+   └────┬────┘
+        │ SELECT FROM notifications WHERE lu=0
+        ▼
+   ┌─────────┐
+   │  MySQL  │
+   └────┬────┘
+        │ Retourne JSON {notifications: [...], unread_count: 3}
+        ▼
+   ┌─────────┐
+   │ Client  │ Met à jour badge notification
+   └─────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+                        INTERACTIONS CLÉS
+═══════════════════════════════════════════════════════════════════════════════
+
+FRONTEND ──► BACKEND
+   • Les pages PHP (htdocs/*.php) appellent les scripts backend (app/*.php)
+   • Utilisation de require_once pour charger les modules
+   • Passage de données via $_POST, $_GET, $_SESSION
+
+FRONTEND ──► API REST
+   • JavaScript (AJAX/Fetch) communique avec api/notifications.php
+   • Échange de données en format JSON
+   • Requêtes asynchrones (pas de rechargement de page)
+
+BACKEND ──► BASE DE DONNÉES
+   • Utilisation de PDO (PHP Data Objects) pour la connexion
+   • Requêtes préparées pour la sécurité (anti-injection SQL)
+   • Transactions pour les opérations critiques
+
+BACKEND ──► FICHIERS
+   • Upload de fichiers dans uploads/rapports/ et uploads/presentations/
+   • Noms de fichiers uniques (timestamp + ID projet)
+   • Protection des dossiers avec index.php
+
+═══════════════════════════════════════════════════════════════════════════════
+                        SÉCURITÉ
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ Authentification requise sur toutes les pages protégées
+✅ Sessions sécurisées avec régénération d'ID
+✅ Requêtes préparées PDO (protection injection SQL)
+✅ Validation stricte des fichiers uploadés (extension + type MIME)
+✅ Protection des dossiers uploads/ avec index.php
+✅ Hashage des mots de passe (password_hash)
+
+═══════════════════════════════════════════════════════════════════════════════
+                        STACK TECHNOLOGIQUE
+═══════════════════════════════════════════════════════════════════════════════
+
+Frontend:
+   • HTML5
+   • CSS3 + Bootstrap 5.3 (responsive)
+   • Vanilla JavaScript
+   • Font Awesome 6.4
+
+Backend:
+   • PHP 8.0+
+   • Apache Server
+   • PDO Extension
+
+Base de données:
+   • MySQL 5.7+ / MariaDB 10.3+
+
+Architecture:
+   • Pattern MVC (séparation des responsabilités)
+   • REST API pour notifications
+   • Gestion de sessions PHP
+
+═══════════════════════════════════════════════════════════════════════════════
+
