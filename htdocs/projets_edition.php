@@ -127,6 +127,51 @@ require_once __DIR__ . '/../app/projets_edition.php';
                                 <?php endif; ?>
                             </td>
                         </tr>
+                        <!-- Commentaires du projet -->
+                        <tr>
+                            <td colspan="7" class="bg-light">
+                                <div class="p-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <small class="text-muted">
+                                            <i class="fa-solid fa-comments me-1"></i>
+                                            <strong><?= $projet['nb_commentaires'] ?? 0 ?></strong> commentaire(s) des visiteurs
+                                        </small>
+                                        <button class="btn btn-sm btn-outline-secondary" type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#commentaires-projet-<?= $projet['id'] ?>" 
+                                                aria-expanded="false">
+                                            <i class="fa-solid fa-comment-dots me-1"></i>Voir les commentaires
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="collapse" id="commentaires-projet-<?= $projet['id'] ?>">
+                                        <div class="commentaires-list mt-2" style="max-height: 300px; overflow-y: auto;">
+                                            <?php if (!empty($projet['commentaires'])): ?>
+                                                <?php foreach ($projet['commentaires'] as $commentaire): ?>
+                                                    <div class="card mb-2 p-2">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div class="flex-grow-1">
+                                                                <small class="fw-bold text-primary">
+                                                                    <i class="fa-solid fa-user me-1"></i>
+                                                                    <?= htmlspecialchars($commentaire['nom_utilisateur']) ?>
+                                                                </small>
+                                                                <small class="text-muted ms-2">
+                                                                    <i class="fa-solid fa-clock me-1"></i>
+                                                                    <?= date('d/m/Y H:i', strtotime($commentaire['date_creation'])) ?>
+                                                                </small>
+                                                                <p class="mb-0 mt-1 small"><?= nl2br(htmlspecialchars($commentaire['commentaire'])) ?></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <p class="text-muted small mb-0">Aucun commentaire pour le moment.</p>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                     <?php endforeach; ?>
                     </tbody>
                 </table>

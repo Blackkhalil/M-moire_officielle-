@@ -1,10 +1,11 @@
 <?php
 require_once __DIR__ . '/../app/auth.php';
 if (!is_logged_in() || current_user()['role'] !== 'organisateur') {
-    header('Location: ../public/login.php');
+    header('Location: ../htdocs/login.php');
     exit;
 }
 require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/commentaires.php';
 
 $edition_id = $_GET['id'] ?? null;
 $edition = null;
@@ -94,6 +95,13 @@ if ($edition_id) {
         $stmt = $pdo->prepare('SELECT w.*, p.nom AS nom_projet FROM winners w JOIN projets p ON p.id = w.id_projet WHERE w.id_edition = ? ORDER BY position ASC');
         $stmt->execute([$edition_id]);
         $winners = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Récupérer les commentaires pour chaque projet
+        foreach ($projets as &$projet) {
+            $projet['commentaires'] = getCommentairesProjet($pdo, $projet['id']);
+            $projet['nb_commentaires'] = countCommentairesProjet($pdo, $projet['id']);
+        }
+        unset($projet);
     }
 }
 

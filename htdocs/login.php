@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/../app/auth.php';
 $error = '';
+$success = '';
+if (isset($_GET['inscription']) && $_GET['inscription'] === 'success') {
+    $success = 'Inscription réussie ! Vous pouvez maintenant vous connecter.';
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $mot_de_passe = $_POST['mot_de_passe'] ?? '';
@@ -49,6 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <p class="login-subtitle">Accédez à votre espace SEIC</p>
                     </div>
                     
+                    <?php if ($success): ?>
+                        <div class="alert alert-success login-alert">
+                            <i class="fas fa-check-circle"></i>
+                            <span><?= htmlspecialchars($success) ?></span>
+                        </div>
+                    <?php endif; ?>
                     <?php if ($error): ?>
                         <div class="alert alert-danger login-alert">
                             <i class="fas fa-exclamation-circle"></i>

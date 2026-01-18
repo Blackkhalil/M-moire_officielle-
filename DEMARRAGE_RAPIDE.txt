@@ -16,7 +16,7 @@
 
 3️⃣  LANCER L'APPLICATION
    • OUVREZ : DEMARRER_PROJET.bat (double-clic)
-   • OU allez sur : http://localhost/M-moire_officielle--RP/htdocs/
+   • OU allez sur : http://localhost/M-moire_officielle-/htdocs/
 
 ═══════════════════════════════════════════════════════════════
 

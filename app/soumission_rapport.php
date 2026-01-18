@@ -106,13 +106,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             // On déplace le fichier uploadé vers notre dossier
             if (move_uploaded_file($file['tmp_name'], $filepath)) {
-                // On enregistre en base de données avec l'état "en_attente"
-                $stmt = $pdo->prepare('INSERT INTO rapports (id_projet, date_soumission, fichier, etat_validation) VALUES (?, NOW(), ?, "en_attente")');
-                if ($stmt->execute([$id_projet, $filename])) {
-                    $success = 'Rapport soumis avec succès !';
-                } else {
-                    $error = 'Erreur lors de l\'enregistrement en base de données.';
-                    unlink($filepath); // On supprime le fichier si l'enregistrement échoue
+                // On enregistre en base de données avec l'état "en_attente" et l'ID de l'utilisateur
+                try {
+                    // Vérifier si la colonne id_utilisateur existe
+                    $columns_check = $pdo->query("SHOW COLUMNS FROM rapports LIKE 'id_utilisateur'")->rowCount();
+                    if ($columns_check > 0) {
+                        $stmt = $pdo->prepare('INSERT INTO rapports (id_projet, id_utilisateur, date_soumission, fichier, etat_validation) VALUES (?, ?, NOW(), ?, "en_attente")');
+                        $result = $stmt->execute([$id_projet, $user_id, $filename]);
+                    } else {
+                        // Fallback si la colonne n'existe pas encore
+                        $stmt = $pdo->prepare('INSERT INTO rapports (id_projet, date_soumission, fichier, etat_validation) VALUES (?, NOW(), ?, "en_attente")');
+                        $result = $stmt->execute([$id_projet, $filename]);
+                    }
+                    
+                    if ($result && $stmt->rowCount() > 0) {
+                        $success = 'Rapport soumis avec succès !';
+                    } else {
+                        $error = 'Erreur lors de l\'enregistrement en base de données.';
+                        unlink($filepath); // On supprime le fichier si l'enregistrement échoue
+                    }
+                } catch (Exception $e) {
+                    // En cas d'erreur, essayer sans id_utilisateur
+                    try {
+                        $stmt = $pdo->prepare('INSERT INTO rapports (id_projet, date_soumission, fichier, etat_validation) VALUES (?, NOW(), ?, "en_attente")');
+                        if ($stmt->execute([$id_projet, $filename])) {
+                            $success = 'Rapport soumis avec succès !';
+                        } else {
+                            $error = 'Erreur lors de l\'enregistrement en base de données.';
+                            unlink($filepath);
+                        }
+                    } catch (Exception $e2) {
+                        $error = 'Erreur lors de l\'enregistrement : ' . $e2->getMessage();
+                        unlink($filepath);
+                    }
                 }
             } else {
                 $error = 'Erreur lors du téléchargement du fichier.';

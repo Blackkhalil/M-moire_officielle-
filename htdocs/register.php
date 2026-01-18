@@ -2,14 +2,29 @@
 require_once __DIR__ . '/../app/auth.php';
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nom = $_POST['nom'] ?? '';
-    $email = $_POST['email'] ?? '';
+    $nom = trim($_POST['nom'] ?? '');
+    $email = trim($_POST['email'] ?? '');
     $mot_de_passe = $_POST['mot_de_passe'] ?? '';
     $mot_de_passe2 = $_POST['mot_de_passe2'] ?? '';
-    if ($mot_de_passe !== $mot_de_passe2) {
+    $role = $_POST['role'] ?? 'etudiant';
+    
+    // Validation
+    if (empty($nom)) {
+        $error = 'Le nom est obligatoire.';
+    } elseif (empty($email)) {
+        $error = 'L\'email est obligatoire.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = 'L\'email n\'est pas valide.';
+    } elseif (empty($mot_de_passe)) {
+        $error = 'Le mot de passe est obligatoire.';
+    } elseif (strlen($mot_de_passe) < 4) {
+        $error = 'Le mot de passe doit contenir au moins 4 caractères.';
+    } elseif ($mot_de_passe !== $mot_de_passe2) {
         $error = 'Les mots de passe ne correspondent pas.';
-    } elseif (register($nom, $email, $mot_de_passe)) {
-        header('Location: login.php');
+    } elseif (!in_array($role, ['etudiant', 'visiteur'])) {
+        $error = 'Rôle invalide.';
+    } elseif (register($nom, $email, $mot_de_passe, $role)) {
+        header('Location: login.php?inscription=success');
         exit;
     } else {
         $error = 'Erreur lors de l\'inscription (email déjà utilisé ?).';
@@ -71,6 +86,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="form-group">
                             <label for="mot_de_passe2" class="form-label"><i class="fa-solid fa-lock"></i> Confirmer le mot de passe</label>
                             <input type="password" class="form-control" id="mot_de_passe2" name="mot_de_passe2" placeholder="Répétez le mot de passe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="role" class="form-label"><i class="fa-solid fa-user-tag"></i> Type de compte</label>
+                            <select class="form-control" id="role" name="role" required>
+                                <option value="etudiant" selected>Étudiant</option>
+                                <option value="visiteur">Visiteur</option>
+                            </select>
+                            <small class="form-text text-muted">
+                                <i class="fa-solid fa-info-circle me-1"></i>
+                                <strong>Étudiant :</strong> Peut soumettre des projets, rapports et présentations<br>
+                                <strong>Visiteur :</strong> Peut consulter les projets et laisser des commentaires
+                            </small>
                         </div>
                         <button type="submit" class="btn btn-primary btn-login-submit">
                             <i class="fa-solid fa-user-plus"></i>

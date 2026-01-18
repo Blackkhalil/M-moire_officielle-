@@ -137,7 +137,7 @@
                             <i class="fas fa-file-upload"></i>
                         </div>
                         <h5 class="feature-title">Dépôt & Validation</h5>
-                        <p class="feature-description">Déposez vos rapports, suivez leur validation et recevez des notifications en temps réel.</p>
+                        <p class="feature-description">Déposez vos rapports et suivez leur validation en temps réel.</p>
                         <div class="feature-badge">Pratique</div>
                     </div>
                 </div>

@@ -89,15 +89,61 @@ require_once __DIR__ . '/../app/projets.php';
                 <tbody>
                 <?php foreach ($projets as $projet): ?>
                     <tr>
-                        <td><span class="badge bg-primary fs-6"><?= htmlspecialchars($projet['nom']) ?></span></td>
+                        <td>
+                            <span class="badge bg-primary fs-6"><?= htmlspecialchars($projet['nom']) ?></span>
+                            <?php if (($projet['nb_commentaires'] ?? 0) > 0): ?>
+                                <br><small class="text-muted">
+                                    <i class="fa-solid fa-comments me-1"></i>
+                                    <?= $projet['nb_commentaires'] ?> commentaire(s)
+                                </small>
+                            <?php endif; ?>
+                        </td>
                         <td><?= htmlspecialchars($projet['description']) ?></td>
                         <td><?= htmlspecialchars($projet['categorie']) ?></td>
                         <td><?= htmlspecialchars($projet['membres']) ?></td>
                         <td><?= htmlspecialchars($projet['id_edition']) ?></td>
                         <td>
                             <a href="?supprimer=<?= $projet['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ce projet ?')"><i class="fa-solid fa-trash"></i></a>
+                            <?php if (($projet['nb_commentaires'] ?? 0) > 0): ?>
+                                <button class="btn btn-info btn-sm mt-1" type="button" 
+                                        data-bs-toggle="collapse" 
+                                        data-bs-target="#commentaires-<?= $projet['id'] ?>" 
+                                        title="Voir les commentaires">
+                                    <i class="fa-solid fa-comments"></i>
+                                </button>
+                            <?php endif; ?>
                         </td>
                     </tr>
+                    <?php if (($projet['nb_commentaires'] ?? 0) > 0): ?>
+                    <tr>
+                        <td colspan="6" class="bg-light p-0">
+                            <div class="collapse" id="commentaires-<?= $projet['id'] ?>">
+                                <div class="p-3">
+                                    <h6 class="mb-2"><i class="fa-solid fa-comments me-1"></i>Commentaires des visiteurs</h6>
+                                    <div class="commentaires-list" style="max-height: 300px; overflow-y: auto;">
+                                        <?php foreach ($projet['commentaires'] as $commentaire): ?>
+                                            <div class="card mb-2 p-2">
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="flex-grow-1">
+                                                        <small class="fw-bold text-primary">
+                                                            <i class="fa-solid fa-user me-1"></i>
+                                                            <?= htmlspecialchars($commentaire['nom_utilisateur']) ?>
+                                                        </small>
+                                                        <small class="text-muted ms-2">
+                                                            <i class="fa-solid fa-clock me-1"></i>
+                                                            <?= date('d/m/Y H:i', strtotime($commentaire['date_creation'])) ?>
+                                                        </small>
+                                                        <p class="mb-0 mt-1 small"><?= nl2br(htmlspecialchars($commentaire['commentaire'])) ?></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php endif; ?>
                 <?php endforeach; ?>
                 </tbody>
             </table>
