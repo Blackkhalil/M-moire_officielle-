@@ -92,6 +92,7 @@ require_once __DIR__ . '/../app/rapports_admin.php';
                             <tr>
                                 <th>Projet</th>
                                 <th>Catégorie</th>
+                                <th>Soumis par</th>
                                 <th>Membres</th>
                                 <th>Édition</th>
                                 <th>Fichier</th>
@@ -110,6 +111,19 @@ require_once __DIR__ . '/../app/rapports_admin.php';
                                     </td>
                                     <td>
                                         <span class="badge bg-secondary"><?= htmlspecialchars($rapport['categorie']) ?></span>
+                                    </td>
+                                    <td>
+                                        <?php if (!empty($rapport['nom_utilisateur'])): ?>
+                                            <div>
+                                                <i class="fa-solid fa-user me-1"></i>
+                                                <strong><?= htmlspecialchars($rapport['nom_utilisateur']) ?></strong>
+                                                <?php if (!empty($rapport['email_utilisateur'])): ?>
+                                                    <br><small class="text-muted"><?= htmlspecialchars($rapport['email_utilisateur']) ?></small>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php else: ?>
+                                            <small class="text-muted">Non disponible</small>
+                                        <?php endif; ?>
                                     </td>
                                     <td>
                                         <small><?= htmlspecialchars($rapport['membres']) ?></small>

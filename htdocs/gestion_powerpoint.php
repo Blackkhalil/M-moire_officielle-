@@ -91,6 +91,7 @@ require_once __DIR__ . '/../app/gestion_powerpoint.php';
                         <thead>
                             <tr>
                                 <th>Projet</th>
+                                <th>Soumis par</th>
                                 <th>Groupe</th>
                                 <th>Édition</th>
                                 <th>Fichier</th>
@@ -108,6 +109,19 @@ require_once __DIR__ . '/../app/gestion_powerpoint.php';
                                             <br>
                                             <small class="text-muted"><?= htmlspecialchars($presentation['categorie']) ?></small>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <?php if (!empty($presentation['nom_utilisateur'])): ?>
+                                            <div>
+                                                <i class="fa-solid fa-user me-1"></i>
+                                                <strong><?= htmlspecialchars($presentation['nom_utilisateur']) ?></strong>
+                                                <?php if (!empty($presentation['email_utilisateur'])): ?>
+                                                    <br><small class="text-muted"><?= htmlspecialchars($presentation['email_utilisateur']) ?></small>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php else: ?>
+                                            <small class="text-muted">Non disponible</small>
+                                        <?php endif; ?>
                                     </td>
                                     <td>
                                         <div>

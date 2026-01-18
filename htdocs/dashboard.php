@@ -37,20 +37,6 @@ $role = $user['role'];
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link active" href="#">Tableau de bord</a></li>
-                <?php if ($role === 'etudiant'): ?>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-bell"></i>
-                        <span class="badge bg-danger" id="notification-count" style="display: none;">0</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
-                        <li><h6 class="dropdown-header">Notifications</h6></li>
-                        <li><div id="notifications-list" class="px-3 py-2 text-muted">Chargement...</div></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-center" href="#" id="mark-all-read">Marquer tout comme lu</a></li>
-                    </ul>
-                </li>
-                <?php endif; ?>
                 <li class="nav-item"><a class="nav-link" href="logout.php"><i class="fa-solid fa-right-from-bracket me-1"></i>Déconnexion</a></li>
             </ul>
         </div>
@@ -163,6 +149,15 @@ $role = $user['role'];
                     </div>
                 </div>
             </a>
+            <a class="action-card" href="etudiant_projets.php">
+                <div class="action-card-header">
+                    <div class="action-card-icon"><i class="fa-solid fa-eye"></i></div>
+                    <div>
+                        <div class="action-card-title">Voir les projets</div>
+                        <p class="action-card-description">Consultez tous les projets et les commentaires des visiteurs.</p>
+                    </div>
+                </div>
+            </a>
         <?php elseif ($role === 'visiteur'): ?>
             <a class="action-card" href="visitor_projects.php">
                 <div class="action-card-header">
@@ -192,93 +187,4 @@ $role = $user['role'];
         </div>
     </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-// Gestion des notifications
-document.addEventListener('DOMContentLoaded', function() {
-    const notificationCount = document.getElementById('notification-count');
-    const notificationsList = document.getElementById('notifications-list');
-    const markAllReadBtn = document.getElementById('mark-all-read');
-    
-    // Charger les notifications
-    function loadNotifications() {
-        fetch('api/notifications.php?action=get_unread')
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    console.error('Erreur:', data.error);
-                    return;
-                }
-                
-                // Mettre à jour le compteur
-                if (data.unread_count > 0) {
-                    notificationCount.textContent = data.unread_count;
-                    notificationCount.style.display = 'inline';
-                } else {
-                    notificationCount.style.display = 'none';
-                }
-                
-                // Mettre à jour la liste
-                if (data.notifications.length === 0) {
-                    notificationsList.innerHTML = '<small class="text-muted">Aucune notification</small>';
-                } else {
-                    let html = '';
-                    data.notifications.forEach(notification => {
-                        const date = new Date(notification.created_at).toLocaleDateString('fr-FR');
-                        html += `
-                            <div class="notification-item mb-2 p-2 border rounded" onclick="markAsRead(${notification.id})">
-                                <div class="fw-bold">${notification.title}</div>
-                                <div class="small text-muted">${notification.message}</div>
-                                <div class="small text-muted">${date}</div>
-                            </div>
-                        `;
-                    });
-                    notificationsList.innerHTML = html;
-                }
-            })
-            .catch(error => {
-                console.error('Erreur lors du chargement des notifications:', error);
-                notificationsList.innerHTML = '<small class="text-danger">Erreur de chargement</small>';
-            });
-    }
-    
-    // Marquer une notification comme lue
-    window.markAsRead = function(notificationId) {
-        fetch('api/notifications.php?action=mark_read', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `notification_id=${notificationId}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                loadNotifications(); // Recharger les notifications
-            }
-        });
-    };
-    
-    // Marquer toutes les notifications comme lues
-    if (markAllReadBtn) {
-        markAllReadBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            fetch('api/notifications.php?action=mark_all_read', {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    loadNotifications(); // Recharger les notifications
-                }
-            });
-        });
-    }
-    
-    // Charger les notifications au démarrage
-    loadNotifications();
-    
-    // Recharger les notifications toutes les 30 secondes
-    setInterval(loadNotifications, 30000);
-});
-</script> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 

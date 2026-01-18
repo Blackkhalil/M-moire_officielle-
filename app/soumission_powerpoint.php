@@ -86,9 +86,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filepath = $upload_dir . $filename;
             
             if (move_uploaded_file($file['tmp_name'], $filepath)) {
-                // Enregistrer en base de données
-                $stmt = $pdo->prepare('INSERT INTO presentations (id_projet, nom_fichier, chemin_fichier, taille_fichier) VALUES (?, ?, ?, ?)');
-                if ($stmt->execute([$id_projet, $file['name'], $filename, $file['size']])) {
+                // Enregistrer en base de données avec l'ID de l'utilisateur
+                // Vérifier si la colonne id_utilisateur existe
+                $columns_check = $pdo->query("SHOW COLUMNS FROM presentations LIKE 'id_utilisateur'")->rowCount();
+                if ($columns_check > 0) {
+                    $stmt = $pdo->prepare('INSERT INTO presentations (id_projet, id_utilisateur, nom_fichier, chemin_fichier, taille_fichier) VALUES (?, ?, ?, ?, ?)');
+                    $stmt->execute([$id_projet, $user_id, $file['name'], $filename, $file['size']]);
+                } else {
+                    // Fallback si la colonne n'existe pas encore
+                    $stmt = $pdo->prepare('INSERT INTO presentations (id_projet, nom_fichier, chemin_fichier, taille_fichier) VALUES (?, ?, ?, ?)');
+                    $stmt->execute([$id_projet, $file['name'], $filename, $file['size']]);
+                }
+                
+                if ($stmt->rowCount() > 0) {
                     $success = 'Présentation soumise avec succès !';
                 } else {
                     $error = 'Erreur lors de l\'enregistrement en base de données.';

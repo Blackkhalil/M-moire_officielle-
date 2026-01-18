@@ -5,7 +5,7 @@
  * Ce fichier permet aux organisateurs de :
  * - Voir tous les rapports soumis par les étudiants
  * - Valider ou refuser les rapports avec des commentaires
- * - Envoyer des notifications automatiques aux étudiants
+ * - Envoyer des emails automatiques aux étudiants
  * - Consulter les statistiques de soumission
  * 
  * @author Khalil
@@ -19,12 +19,6 @@ if (!is_logged_in() || current_user()['role'] !== 'organisateur') {
     exit;
 }
 require_once __DIR__ . '/../config/config.php';
-
-// Vérifier si le système de notifications est disponible
-$notifications_available = $pdo->query("SHOW TABLES LIKE 'notifications'")->rowCount() > 0;
-if ($notifications_available) {
-    require_once __DIR__ . '/notification_manager.php';
-}
 
 $success = '';
 $error = '';
@@ -61,18 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sujet = "[SEIC LBS] Rapport validé : " . $row['projet_nom'];
                 $message = "Votre rapport pour le projet '" . $row['projet_nom'] . "' a été validé.\n\nCommentaire :\n" . $commentaire;
                 notifier_membres($row['membres'], $sujet, $message);
-                
-                // Notification dans l'application (si disponible)
-                if ($notifications_available) {
-                    $notificationManager = getNotificationManager($pdo);
-                    $notificationManager->notifyProjectMembers(
-                        $row['projet_id'],
-                        'rapport_valide',
-                        'Rapport validé',
-                        'Votre rapport "' . $row['projet_nom'] . '" a été validé par les organisateurs.',
-                        ['rapport_id' => $rapport_id, 'commentaire' => $commentaire]
-                    );
-                }
             }
         } else {
             $error = 'Erreur lors de la validation.';
@@ -89,18 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sujet = "[SEIC LBS] Rapport refusé : " . $row['projet_nom'];
                 $message = "Votre rapport pour le projet '" . $row['projet_nom'] . "' a été refusé.\n\nCommentaire :\n" . $commentaire;
                 notifier_membres($row['membres'], $sujet, $message);
-                
-                // Notification dans l'application (si disponible)
-                if ($notifications_available) {
-                    $notificationManager = getNotificationManager($pdo);
-                    $notificationManager->notifyProjectMembers(
-                        $row['projet_id'],
-                        'rapport_refuse',
-                        'Rapport refusé',
-                        'Votre rapport "' . $row['projet_nom'] . '" a été refusé. Veuillez consulter les commentaires.',
-                        ['rapport_id' => $rapport_id, 'commentaire' => $commentaire]
-                    );
-                }
             }
         } else {
             $error = 'Erreur lors du refus.';
@@ -108,19 +78,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Récupérer tous les rapports avec les informations des projets
-$stmt = $pdo->query('
-    SELECT 
-        r.*,
-        p.nom as nom_projet,
-        p.categorie,
-        p.membres,
-        e.annee
-    FROM rapports r
-    JOIN projets p ON r.id_projet = p.id
-    JOIN editions e ON p.id_edition = e.id
-    ORDER BY r.date_soumission DESC
-');
+// Vérifier si la colonne id_utilisateur existe
+$has_user_id = $pdo->query("SHOW COLUMNS FROM rapports LIKE 'id_utilisateur'")->rowCount() > 0;
+
+// Récupérer tous les rapports avec les informations des projets et de l'utilisateur
+if ($has_user_id) {
+    $stmt = $pdo->query('
+        SELECT 
+            r.*,
+            p.nom as nom_projet,
+            p.categorie,
+            p.membres,
+            e.annee,
+            u.nom as nom_utilisateur,
+            u.email as email_utilisateur
+        FROM rapports r
+        JOIN projets p ON r.id_projet = p.id
+        JOIN editions e ON p.id_edition = e.id
+        LEFT JOIN utilisateurs u ON r.id_utilisateur = u.id
+        ORDER BY r.date_soumission DESC
+    ');
+} else {
+    $stmt = $pdo->query('
+        SELECT 
+            r.*,
+            p.nom as nom_projet,
+            p.categorie,
+            p.membres,
+            e.annee,
+            NULL as nom_utilisateur,
+            NULL as email_utilisateur
+        FROM rapports r
+        JOIN projets p ON r.id_projet = p.id
+        JOIN editions e ON p.id_edition = e.id
+        ORDER BY r.date_soumission DESC
+    ');
+}
 $rapports = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Statistiques

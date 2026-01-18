@@ -30,6 +30,20 @@ require_once __DIR__ . '/../app/visitor_projects.php';
         <div class="dashboard-header">
             <h2 class="dashboard-title"><i class="fa-solid fa-eye me-2"></i>Projets SEIC</h2>
             <p class="dashboard-subtitle">Découvrez tous les projets et leur localisation</p>
+            
+            <?php if (isset($success) && $success): ?>
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    <i class="fa-solid fa-circle-check me-1"></i><?= htmlspecialchars($success) ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <?php endif; ?>
+            
+            <?php if (isset($error) && $error): ?>
+                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                    <i class="fa-solid fa-circle-exclamation me-1"></i><?= htmlspecialchars($error) ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <?php endif; ?>
         </div>
         
         <!-- Sélection d'édition -->
@@ -121,6 +135,78 @@ require_once __DIR__ . '/../app/visitor_projects.php';
                                         </small>
                                     </p>
                                     <?php endif; ?>
+                                    
+                                    <!-- Section Commentaires -->
+                                    <div class="mt-3 border-top pt-2">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <small class="text-muted">
+                                                <i class="fa-solid fa-comments me-1"></i>
+                                                <strong><?= $projet['nb_commentaires'] ?? 0 ?></strong> commentaire(s)
+                                            </small>
+                                            <button class="btn btn-sm btn-outline-primary" type="button" 
+                                                    data-bs-toggle="collapse" 
+                                                    data-bs-target="#commentaires-<?= $projet['id'] ?>" 
+                                                    aria-expanded="false">
+                                                <i class="fa-solid fa-comment-dots me-1"></i>Voir/Commenter
+                                            </button>
+                                        </div>
+                                        
+                                        <!-- Zone de commentaires (collapsible) -->
+                                        <div class="collapse" id="commentaires-<?= $projet['id'] ?>">
+                                            <div class="mt-2">
+                                                <!-- Formulaire d'ajout de commentaire -->
+                                                <form method="post" class="mb-3">
+                                                    <input type="hidden" name="action" value="ajouter">
+                                                    <input type="hidden" name="id_projet" value="<?= $projet['id'] ?>">
+                                                    <div class="mb-2">
+                                                        <textarea class="form-control form-control-sm" 
+                                                                  name="commentaire" 
+                                                                  rows="2" 
+                                                                  placeholder="Ajouter un commentaire..." 
+                                                                  required 
+                                                                  maxlength="1000"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-sm btn-primary">
+                                                        <i class="fa-solid fa-paper-plane me-1"></i>Publier
+                                                    </button>
+                                                </form>
+                                                
+                                                <!-- Liste des commentaires -->
+                                                <div class="commentaires-list" style="max-height: 200px; overflow-y: auto;">
+                                                    <?php if (!empty($projet['commentaires'])): ?>
+                                                        <?php foreach ($projet['commentaires'] as $commentaire): ?>
+                                                            <div class="card mb-2 p-2">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <div class="flex-grow-1">
+                                                                        <small class="fw-bold text-primary">
+                                                                            <i class="fa-solid fa-user me-1"></i>
+                                                                            <?= htmlspecialchars($commentaire['nom_utilisateur']) ?>
+                                                                        </small>
+                                                                        <small class="text-muted ms-2">
+                                                                            <?= date('d/m/Y H:i', strtotime($commentaire['date_creation'])) ?>
+                                                                        </small>
+                                                                        <p class="mb-0 mt-1 small"><?= nl2br(htmlspecialchars($commentaire['commentaire'])) ?></p>
+                                                                    </div>
+                                                                    <?php if ($commentaire['id_utilisateur'] == current_user()['id']): ?>
+                                                                        <form method="post" class="ms-2" 
+                                                                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">
+                                                                            <input type="hidden" name="action" value="supprimer">
+                                                                            <input type="hidden" name="commentaire_id" value="<?= $commentaire['id'] ?>">
+                                                                            <button type="submit" class="btn btn-sm btn-link text-danger p-0" title="Supprimer">
+                                                                                <i class="fa-solid fa-trash"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                    <?php endif; ?>
+                                                                </div>
+                                                            </div>
+                                                        <?php endforeach; ?>
+                                                    <?php else: ?>
+                                                        <p class="text-muted small mb-0">Aucun commentaire pour le moment.</p>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
