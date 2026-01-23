@@ -15,7 +15,7 @@ $groupes = $pdo->query('SELECT g.*, s.nom AS salle_nom FROM groupes g JOIN salle
     <title>Groupes & Salles - SEIC LBS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/modern-style.css">
+    <link rel="stylesheet" href="css/modern-style.css?v=2.3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         #plan-img { max-width: 100%; border: 2px solid #ff4000; border-radius: 18px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
@@ -116,3 +116,6 @@ $groupes = $pdo->query('SELECT g.*, s.nom AS salle_nom FROM groupes g JOIN salle
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html> 
+
+
+

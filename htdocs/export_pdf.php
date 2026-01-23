@@ -40,10 +40,10 @@ function exportRapportsPDF($pdo) {
         <style>
             body { font-family: Arial, sans-serif; margin: 20px; }
             .header { text-align: center; margin-bottom: 30px; }
-            .header h1 { color: #1e40af; margin-bottom: 10px; }
+            .header h1 { color: #1a1f3a; margin-bottom: 10px; }
             .header p { color: #64748b; }
             .rapport { margin-bottom: 25px; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; }
-            .rapport h3 { color: #1e40af; margin-bottom: 10px; }
+            .rapport h3 { color: #1a1f3a; margin-bottom: 10px; }
             .info { margin-bottom: 8px; }
             .label { font-weight: bold; color: #334155; }
             .status { padding: 4px 8px; border-radius: 4px; font-size: 0.9em; }
@@ -134,10 +134,10 @@ function exportProjetsPDF($pdo) {
         <style>
             body { font-family: Arial, sans-serif; margin: 20px; }
             .header { text-align: center; margin-bottom: 30px; }
-            .header h1 { color: #1e40af; margin-bottom: 10px; }
+            .header h1 { color: #1a1f3a; margin-bottom: 10px; }
             .header p { color: #64748b; }
             .projet { margin-bottom: 25px; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; }
-            .projet h3 { color: #1e40af; margin-bottom: 10px; }
+            .projet h3 { color: #1a1f3a; margin-bottom: 10px; }
             .info { margin-bottom: 8px; }
             .label { font-weight: bold; color: #334155; }
             .footer { margin-top: 30px; text-align: center; color: #64748b; font-size: 0.9em; }
@@ -204,3 +204,7 @@ header('Content-Length: ' . strlen($content));
 
 echo $content;
 ?>
+
+
+
+
