@@ -9,16 +9,30 @@
  * - Protection des pages nécessitant une authentification
  * 
  * @author Khalil
- * @version 1.0
+ * @version 2.0 - Sécurité renforcée
  */
 
-// On démarre la session pour pouvoir stocker les informations de l'utilisateur
-session_start();
+// Configuration sécurisée de la session
+if (session_status() === PHP_SESSION_NONE) {
+    ini_set('session.cookie_httponly', 1);
+    ini_set('session.use_only_cookies', 1);
+    ini_set('session.cookie_samesite', 'Strict');
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+        ini_set('session.cookie_secure', 1);
+    }
+    session_start();
+}
+
 require_once __DIR__ . '/../config/config.php';
 
 function register($nom, $email, $mot_de_passe, $role = 'etudiant') {
     global $pdo;
-    $hash = password_hash($mot_de_passe, PASSWORD_DEFAULT);
+    
+    if (strlen($mot_de_passe) < 8) {
+        return false;
+    }
+    
+    $hash = password_hash($mot_de_passe, PASSWORD_BCRYPT, ['cost' => 12]);
     $stmt = $pdo->prepare('INSERT INTO utilisateurs (nom, email, mot_de_passe, role) VALUES (?, ?, ?, ?)');
     return $stmt->execute([$nom, $email, $hash, $role]);
 }
@@ -26,60 +40,70 @@ function register($nom, $email, $mot_de_passe, $role = 'etudiant') {
 function login($email, $mot_de_passe) {
     global $pdo;
     
-    // Debug
-    error_log("Tentative de connexion: $email");
-    
     $stmt = $pdo->prepare('SELECT * FROM utilisateurs WHERE email = ?');
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$user) {
-        error_log("Utilisateur non trouvé: $email");
+        sleep(1);
         return false;
     }
     
-    error_log("Utilisateur trouvé: " . $user['nom']);
-    error_log("Mot de passe stocké: " . $user['mot_de_passe']);
-    error_log("Mot de passe fourni: " . $mot_de_passe);
-    
-    // Vérifier le mot de passe (texte brut ou haché)
-    $password_valid = false;
-    
-    // Comparaison directe (pour mots de passe en texte brut)
-    if ($user['mot_de_passe'] === $mot_de_passe) {
-        $password_valid = true;
-        error_log("Mot de passe valide (texte brut)");
-    }
-    // Essayer avec password_verify (pour mots de passe hachés)
-    elseif (password_verify($mot_de_passe, $user['mot_de_passe'])) {
-        $password_valid = true;
-        error_log("Mot de passe valide (haché)");
-    } else {
-        error_log("Mot de passe invalide");
-    }
-    
-    if ($password_valid) {
+    if (password_verify($mot_de_passe, $user['mot_de_passe'])) {
+        session_regenerate_id(true);
+        
         $_SESSION['user'] = [
             'id' => $user['id'],
             'nom' => $user['nom'],
             'email' => $user['email'],
             'role' => $user['role']
         ];
-        error_log("Connexion réussie pour: " . $user['nom']);
+        
+        $_SESSION['last_activity'] = time();
+        $_SESSION['user_ip'] = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+        
         return true;
     }
     
+    sleep(1);
     return false;
 }
 
 function logout() {
+    $_SESSION = [];
+    
+    if (isset($_COOKIE[session_name()])) {
+        setcookie(session_name(), '', time() - 3600, '/');
+    }
+    
     session_destroy();
 }
 
 function is_logged_in() {
-    return isset($_SESSION['user']);
+    if (!isset($_SESSION['user'])) {
+        return false;
+    }
+    
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 3600)) {
+        logout();
+        return false;
+    }
+    
+    $_SESSION['last_activity'] = time();
+    return true;
 }
 
 function current_user() {
     return $_SESSION['user'] ?? null;
+}
+
+function generate_csrf_token() {
+    if (!isset($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+function verify_csrf_token($token) {
+    return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
 } 

@@ -17,8 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'L\'email n\'est pas valide.';
     } elseif (empty($mot_de_passe)) {
         $error = 'Le mot de passe est obligatoire.';
-    } elseif (strlen($mot_de_passe) < 4) {
-        $error = 'Le mot de passe doit contenir au moins 4 caractères.';
+    } elseif (strlen($mot_de_passe) < 8) {
+        $error = 'Le mot de passe doit contenir au moins 8 caractères.';
     } elseif ($mot_de_passe !== $mot_de_passe2) {
         $error = 'Les mots de passe ne correspondent pas.';
     } elseif (!in_array($role, ['etudiant', 'visiteur'])) {
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Inscription - SEIC LBS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/modern-style.css">
+    <link rel="stylesheet" href="css/modern-style.css?v=2.3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -81,7 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="form-group">
                             <label for="mot_de_passe" class="form-label"><i class="fa-solid fa-lock"></i> Mot de passe</label>
-                            <input type="password" class="form-control" id="mot_de_passe" name="mot_de_passe" placeholder="Choisissez un mot de passe" required>
+                            <input type="password" class="form-control" id="mot_de_passe" name="mot_de_passe" placeholder="Minimum 8 caractères" required minlength="8">
+                            <small class="text-muted">Minimum 8 caractères requis</small>
                         </div>
                         <div class="form-group">
                             <label for="mot_de_passe2" class="form-label"><i class="fa-solid fa-lock"></i> Confirmer le mot de passe</label>
@@ -128,3 +129,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html> 
+
+
+
