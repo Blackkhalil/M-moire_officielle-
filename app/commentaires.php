@@ -44,6 +44,7 @@ try {
 
 // Traitement des actions (seulement si utilisateur connecté)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && is_logged_in() && isset($user_id)) {
+    require_valid_csrf();
     $action = $_POST['action'] ?? '';
     
     if ($action === 'ajouter') {

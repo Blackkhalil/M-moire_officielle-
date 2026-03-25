@@ -1,14 +1,14 @@
 <?php
 require_once __DIR__ . '/../app/auth.php';
-if (!is_logged_in() || current_user()['role'] !== 'organisateur') {
-    header('Location: ../public/login.php');
+if (!is_logged_in() || !in_array(current_user()['role'], ['organisateur', 'administrateur'])) {
+    header('Location: login.php');
     exit;
 }
 require_once __DIR__ . '/../config/config.php';
 
-$presentation_id = $_GET['id'] ?? null;
+$presentation_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-if (!$presentation_id) {
+if ($presentation_id <= 0) {
     header('Location: gestion_powerpoint.php');
     exit;
 }
@@ -31,23 +31,30 @@ if (!$presentation) {
     exit;
 }
 
-$file_path = __DIR__ . '/../uploads/presentations/' . $presentation['chemin_fichier'];
+$file_path = rtrim(UPLOADS_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'presentations' . DIRECTORY_SEPARATOR . $presentation['chemin_fichier'];
+$real_base = realpath(rtrim(UPLOADS_DIR, DIRECTORY_SEPARATOR));
+$real_file = realpath($file_path);
 
-if (!file_exists($file_path)) {
-    die('Fichier non trouvé.');
+if ($real_file === false || $real_base === false || strpos($real_file, $real_base) !== 0 || !is_file($real_file) || !is_readable($real_file)) {
+    http_response_code(404);
+    exit('Fichier non trouvé.');
 }
 
 // Définir les headers pour le téléchargement
 header('Content-Type: application/octet-stream');
 header('Content-Disposition: attachment; filename="' . $presentation['nom_fichier'] . '"');
-header('Content-Length: ' . filesize($file_path));
+header('Content-Length: ' . filesize($real_file));
 header('Cache-Control: must-revalidate');
 header('Pragma: public');
 
 // Lire et envoyer le fichier
-readfile($file_path);
+readfile($real_file);
 exit;
-?>
+
+
+
+
+
 
 
 

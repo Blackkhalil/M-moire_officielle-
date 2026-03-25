@@ -31,7 +31,12 @@ error_log
 
 # Node modules (si vous ajoutez du JS plus tard)
 node_modules/
+vendor/
 
 # Variables d'environnement sensibles
 .env
 .env.local
+
+# Dumps SQL (conserver les scripts de migration dans /database)
+*.sql
+!database/*.sql

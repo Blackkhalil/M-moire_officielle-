@@ -1,13 +1,14 @@
 <?php
 require_once __DIR__ . '/../app/auth.php';
 if (!is_logged_in() || current_user()['role'] !== 'organisateur') {
-    header('Location: ../public/login.php');
+    header('Location: ../htdocs/login.php');
     exit;
 }
 require_once __DIR__ . '/../config/config.php';
 
 // Ajout d'une salle
 if (isset($_POST['ajouter_salle'])) {
+    require_valid_csrf();
     $nom = $_POST['nom_salle'] ?? '';
     $localisation = $_POST['localisation'] ?? '';
     if ($nom) {
@@ -22,6 +23,7 @@ if (isset($_GET['supprimer_salle'])) {
 }
 // Ajout d'un groupe
 if (isset($_POST['ajouter_groupe'])) {
+    require_valid_csrf();
     $nom = $_POST['nom_groupe'] ?? '';
     $id_edition = $_POST['id_edition'] ?? null;
     $id_salle = $_POST['id_salle'] ?? null;

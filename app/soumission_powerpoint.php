@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../app/auth.php';
 if (!is_logged_in() || current_user()['role'] !== 'etudiant') {
-    header('Location: ../public/login.php');
+    header('Location: ../htdocs/login.php');
     exit;
 }
 require_once __DIR__ . '/../config/config.php';
@@ -15,6 +15,7 @@ $user_id = current_user()['id'];
 $projets = $pdo->query('SELECT * FROM projets ORDER BY nom')->fetchAll(PDO::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_valid_csrf();
     $id_projet_raw = $_POST['id_projet'] ?? null;
     
     // Valider explicitement la sélection du projet (évite le cas id=0 considéré comme falsy)

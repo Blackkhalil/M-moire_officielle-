@@ -1,13 +1,14 @@
 <?php
 require_once __DIR__ . '/../app/auth.php';
 if (!is_logged_in() || current_user()['role'] !== 'organisateur') {
-    header('Location: ../public/login.php');
+    header('Location: ../htdocs/login.php');
     exit;
 }
 require_once __DIR__ . '/../config/config.php';
 
 // Ajout d'une édition
 if (isset($_POST['ajouter'])) {
+    require_valid_csrf();
     $annee = $_POST['annee'] ?? '';
     $description = $_POST['description'] ?? '';
     $date_debut = $_POST['date_debut'] ?? '';

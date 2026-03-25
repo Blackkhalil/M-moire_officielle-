@@ -9,6 +9,7 @@ require_once __DIR__ . '/commentaires.php';
 
 // Ajout d'un projet
 if (isset($_POST['ajouter'])) {
+    require_valid_csrf();
     $nom = $_POST['nom'] ?? '';
     $description = $_POST['description'] ?? '';
     $categorie = $_POST['categorie'] ?? '';

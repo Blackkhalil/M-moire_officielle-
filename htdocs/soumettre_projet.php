@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 require_once __DIR__ . '/../app/soumission_projet.php';
 ?>
 <!DOCTYPE html>
@@ -10,9 +6,9 @@ require_once __DIR__ . '/../app/soumission_projet.php';
 <head>
     <meta charset="UTF-8">
     <title>Soumettre un projet - SEIC LBS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/modern-style.css?v=2.3">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/modern-style.css?v=2.4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -20,7 +16,7 @@ require_once __DIR__ . '/../app/soumission_projet.php';
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" href="dashboard.php">
             <div class="logo-container">
-                <img src="images/logo-lbs.png" alt="Logo LBS" class="logo-img">
+                <img src="images/logo-lbs.png" alt="Logo LBS" class="logo-img img-fluid">
                 <div class="logo-text">
                     <span class="logo-title">SEIC</span>
                     <span class="logo-subtitle">Lomé Business School</span>
@@ -35,7 +31,7 @@ require_once __DIR__ . '/../app/soumission_projet.php';
             <div class="col-lg-6 col-md-8">
                 <div class="login-card">
         <div class="text-center mb-3">
-                        <div class="action-card-icon" style="margin:0 auto 1rem; width:60px; height:60px;"><i class="fa-solid fa-lightbulb"></i></div>
+                        <div class="action-card-icon mx-auto mb-3 d-flex align-items-center justify-content-center"><i class="fa-solid fa-lightbulb"></i></div>
                         <h2 class="login-title">Soumettre un projet</h2>
                         <p class="login-subtitle">Proposez un nouveau projet pour la SEIC</p>
         </div>
@@ -52,6 +48,7 @@ require_once __DIR__ . '/../app/soumission_projet.php';
                         </div>
         <?php endif; ?>
                     <form method="post" class="login-form" autocomplete="on">
+                        <?= csrf_input() ?>
                         <div class="form-group">
                             <label for="nom" class="form-label"><i class="fa-solid fa-lightbulb me-1"></i> Nom du projet</label>
                             <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom du projet" required>
@@ -114,9 +111,15 @@ require_once __DIR__ . '/../app/soumission_projet.php';
         </div>
     </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html> 
+
+
+
+
+
+
 
 
 

@@ -36,14 +36,15 @@ function exportRapportsPDF($pdo) {
     <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Rapports SEIC - Export</title>
         <style>
             body { font-family: Arial, sans-serif; margin: 20px; }
             .header { text-align: center; margin-bottom: 30px; }
-            .header h1 { color: #1a1f3a; margin-bottom: 10px; }
+            .header h1 { color: #3B5A85; margin-bottom: 10px; }
             .header p { color: #64748b; }
             .rapport { margin-bottom: 25px; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; }
-            .rapport h3 { color: #1a1f3a; margin-bottom: 10px; }
+            .rapport h3 { color: #3B5A85; margin-bottom: 10px; }
             .info { margin-bottom: 8px; }
             .label { font-weight: bold; color: #334155; }
             .status { padding: 4px 8px; border-radius: 4px; font-size: 0.9em; }
@@ -54,6 +55,7 @@ function exportRapportsPDF($pdo) {
         </style>
     </head>
     <body>
+        <div class="container">
         <div class="header">
             <h1>Rapports SEIC - Lomé Business School</h1>
             <p>Export généré le ' . date('d/m/Y à H:i') . '</p>
@@ -106,6 +108,7 @@ function exportRapportsPDF($pdo) {
             <p>Plateforme SEIC - Lomé Business School</p>
             <p>Export généré automatiquement</p>
         </div>
+        </div>
     </body>
     </html>';
     
@@ -130,20 +133,22 @@ function exportProjetsPDF($pdo) {
     <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Projets SEIC - Export</title>
         <style>
             body { font-family: Arial, sans-serif; margin: 20px; }
             .header { text-align: center; margin-bottom: 30px; }
-            .header h1 { color: #1a1f3a; margin-bottom: 10px; }
+            .header h1 { color: #3B5A85; margin-bottom: 10px; }
             .header p { color: #64748b; }
             .projet { margin-bottom: 25px; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; }
-            .projet h3 { color: #1a1f3a; margin-bottom: 10px; }
+            .projet h3 { color: #3B5A85; margin-bottom: 10px; }
             .info { margin-bottom: 8px; }
             .label { font-weight: bold; color: #334155; }
             .footer { margin-top: 30px; text-align: center; color: #64748b; font-size: 0.9em; }
         </style>
     </head>
     <body>
+        <div class="container">
         <div class="header">
             <h1>Projets SEIC - Lomé Business School</h1>
             <p>Export généré le ' . date('d/m/Y à H:i') . '</p>
@@ -177,6 +182,7 @@ function exportProjetsPDF($pdo) {
             <p>Plateforme SEIC - Lomé Business School</p>
             <p>Export généré automatiquement</p>
         </div>
+        </div>
     </body>
     </html>';
     
@@ -204,6 +210,11 @@ header('Content-Length: ' . strlen($content));
 
 echo $content;
 ?>
+
+
+
+
+
 
 
 

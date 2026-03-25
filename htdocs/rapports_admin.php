@@ -6,9 +6,9 @@ require_once __DIR__ . '/../app/rapports_admin.php';
 <head>
     <meta charset="UTF-8">
     <title>Gestion des rapports - SEIC LBS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/modern-style.css?v=2.3">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/modern-style.css?v=2.4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -16,7 +16,7 @@ require_once __DIR__ . '/../app/rapports_admin.php';
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" href="dashboard.php">
             <div class="logo-container">
-                <img src="images/logo-lbs.png" alt="Logo LBS" class="logo-img">
+                <img src="images/logo-lbs.png" alt="Logo LBS" class="logo-img img-fluid">
                 <div class="logo-text">
                     <span class="logo-title">SEIC</span>
                     <span class="logo-subtitle">Lomé Business School</span>
@@ -208,6 +208,7 @@ require_once __DIR__ . '/../app/rapports_admin.php';
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <form method="post">
+                <?= csrf_input() ?>
                 <div class="modal-body">
                     <input type="hidden" name="rapport_id" id="modalRapportId">
                     <input type="hidden" name="action" id="modalAction">
@@ -241,7 +242,7 @@ require_once __DIR__ . '/../app/rapports_admin.php';
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('validationModal');
@@ -272,6 +273,11 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
+
+
+
+
 
 
 

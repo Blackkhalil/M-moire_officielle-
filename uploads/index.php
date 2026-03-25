@@ -1,6 +1,5 @@
 <?php
-// Rediriger vers la page d'accueil si accès direct
-header('Location: ../public/index.html');
-exit;
-?>
+// Bloquer l'accès direct au dossier uploads
+http_response_code(403);
+exit('Acces interdit');
 
