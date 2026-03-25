@@ -1,16 +1,18 @@
 <?php
 require_once __DIR__ . '/../app/auth.php';
 if (!is_logged_in() || current_user()['role'] !== 'etudiant') {
-    header('Location: ../public/login.php');
+    header('Location: ../htdocs/login.php');
     exit;
 }
 require_once __DIR__ . '/../config/config.php';
 
 $success = '';
 $error = '';
+$user_id = current_user()['id'];
 $editions = $pdo->query('SELECT * FROM editions ORDER BY annee DESC')->fetchAll(PDO::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_valid_csrf();
     $nom = $_POST['nom'] ?? '';
     $description = $_POST['description'] ?? '';
     $categorie = $_POST['categorie'] ?? '';

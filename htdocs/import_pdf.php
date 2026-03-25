@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../app/auth.php';
 
-// Vérifier la connexion
+// VÃ©rifier la connexion
 if (!is_logged_in()) {
     header('Location: login.php');
     exit;
@@ -10,9 +10,9 @@ if (!is_logged_in()) {
 $user = current_user();
 $role = $user['role'];
 
-// Vérifier les permissions
+// VÃ©rifier les permissions
 if (!in_array($role, ['administrateur', 'organisateur'])) {
-    die('Accès non autorisé');
+    die('AccÃ¨s non autorisÃ©');
 }
 
 require_once __DIR__ . '/../config/config.php';
@@ -22,9 +22,10 @@ $error = '';
 
 // Traitement de l'upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['pdf_file'])) {
+    require_valid_csrf();
     $uploadDir = __DIR__ . '/../uploads/';
     
-    // Vérifier que le dossier uploads existe
+    // VÃ©rifier que le dossier uploads existe
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0755, true);
     }
@@ -36,22 +37,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['pdf_file'])) {
     $fileError = $file['error'];
     $fileType = $file['type'];
     
-    // Vérifier les erreurs d'upload
+    // VÃ©rifier les erreurs d'upload
     if ($fileError === 0) {
-        // Vérifier le type de fichier
+        // VÃ©rifier le type de fichier
         $allowedTypes = ['application/pdf'];
         $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
         
         if (in_array($fileType, $allowedTypes) || $fileExt === 'pdf') {
-            // Vérifier la taille (max 10MB)
+            // VÃ©rifier la taille (max 10MB)
             if ($fileSize <= 10 * 1024 * 1024) {
-                // Générer un nom unique
+                // GÃ©nÃ©rer un nom unique
                 $newFileName = uniqid() . '_' . $fileName;
                 $filePath = $uploadDir . $newFileName;
                 
-                // Déplacer le fichier
+                // DÃ©placer le fichier
                 if (move_uploaded_file($fileTmpName, $filePath)) {
-                    // Enregistrer en base de données
+                    // Enregistrer en base de donnÃ©es
                     $projetId = $_POST['projet_id'] ?? null;
                     $commentaire = $_POST['commentaire'] ?? '';
                     
@@ -61,9 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['pdf_file'])) {
                             VALUES (?, NOW(), ?, 'en_attente', ?)
                         ");
                         $stmt->execute([$projetId, $newFileName, $commentaire]);
-                        $message = 'Fichier PDF importé avec succès !';
+                        $message = 'Fichier PDF importÃ© avec succÃ¨s !';
                     } else {
-                        $error = 'Veuillez sélectionner un projet.';
+                        $error = 'Veuillez sÃ©lectionner un projet.';
                     }
                 } else {
                     $error = 'Erreur lors de l\'upload du fichier.';
@@ -72,14 +73,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['pdf_file'])) {
                 $error = 'Le fichier est trop volumineux (max 10MB).';
             }
         } else {
-            $error = 'Seuls les fichiers PDF sont autorisés.';
+            $error = 'Seuls les fichiers PDF sont autorisÃ©s.';
         }
     } else {
         $error = 'Erreur lors de l\'upload du fichier.';
     }
 }
 
-// Récupérer la liste des projets
+// RÃ©cupÃ©rer la liste des projets
 $stmt = $pdo->prepare("
     SELECT p.id, p.nom, e.annee 
     FROM projets p 
@@ -95,20 +96,20 @@ $projets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Import PDF - SEIC LBS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/modern-style.css?v=2.3">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/modern-style.css?v=2.4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-modern">
     <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <a class="navbar-brand d-flex align-items-center" href="index.php">
             <div class="logo-container">
-                <img src="images/logo-lbs.png" alt="Logo LBS" class="logo-img">
+                <img src="images/logo-lbs.png" alt="Logo LBS" class="logo-img img-fluid">
                 <div class="logo-text">
                     <span class="logo-title">SEIC</span>
-                    <span class="logo-subtitle">Lomé Business School</span>
+                    <span class="logo-subtitle">LomÃ© Business School</span>
                 </div>
             </div>
         </a>
@@ -131,7 +132,7 @@ $projets = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <i class="fas fa-file-upload"></i>
                         </div>
                         <h2 class="import-title">Import de fichiers PDF</h2>
-                        <p class="import-subtitle">Téléchargez des rapports PDF pour les projets SEIC</p>
+                        <p class="import-subtitle">TÃ©lÃ©chargez des rapports PDF pour les projets SEIC</p>
                     </div>
                     
                     <?php if ($message): ?>
@@ -149,13 +150,14 @@ $projets = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php endif; ?>
                     
                     <form method="post" enctype="multipart/form-data" class="import-form">
+                        <?= csrf_input() ?>
                         <div class="form-group">
                             <label for="projet_id" class="form-label">
                                 <i class="fas fa-project-diagram"></i>
-                                Projet associé
+                                Projet associÃ©
                             </label>
                             <select class="form-control" id="projet_id" name="projet_id" required>
-                                <option value="">Sélectionnez un projet</option>
+                                <option value="">SÃ©lectionnez un projet</option>
                                 <?php foreach ($projets as $projet): ?>
                                     <option value="<?= $projet['id'] ?>">
                                         <?= htmlspecialchars($projet['nom']) ?> (<?= $projet['annee'] ?>)
@@ -173,8 +175,8 @@ $projets = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <input type="file" class="form-control file-input" id="pdf_file" name="pdf_file" accept=".pdf" required>
                                 <div class="file-upload-text">
                                     <i class="fas fa-cloud-upload-alt"></i>
-                                    <p>Glissez-déposez votre fichier PDF ici ou cliquez pour sélectionner</p>
-                                    <small>Format accepté : PDF (max 10MB)</small>
+                                    <p>Glissez-dÃ©posez votre fichier PDF ici ou cliquez pour sÃ©lectionner</p>
+                                    <small>Format acceptÃ© : PDF (max 10MB)</small>
                                 </div>
                             </div>
                         </div>
@@ -196,10 +198,10 @@ $projets = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <div class="import-info">
                         <h5>Informations importantes :</h5>
                         <ul>
-                            <li>Seuls les fichiers PDF sont acceptés</li>
+                            <li>Seuls les fichiers PDF sont acceptÃ©s</li>
                             <li>Taille maximale : 10MB</li>
                             <li>Le fichier sera en attente de validation</li>
-                            <li>Un nom unique sera généré automatiquement</li>
+                            <li>Un nom unique sera gÃ©nÃ©rÃ© automatiquement</li>
                         </ul>
                     </div>
                 </div>
@@ -212,7 +214,7 @@ $projets = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-md-start text-center mb-2 mb-md-0">
-                <strong>© 2024 Lomé Business School</strong> — Plateforme SEIC
+                <strong>Â© 2024 LomÃ© Business School</strong> â€” Plateforme SEIC
             </div>
             <div class="col-md-6 text-md-end text-center">
                 <a href="https://lome-bs.com/" class="text-white text-decoration-none me-3" target="_blank"><i class="fas fa-globe me-1"></i>Site LBS</a>
@@ -222,7 +224,7 @@ $projets = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
     // Gestion du drag & drop
     const fileInput = document.getElementById('pdf_file');
@@ -265,6 +267,12 @@ $projets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </script>
 </body>
 </html>
+
+
+
+
+
+
 
 
 

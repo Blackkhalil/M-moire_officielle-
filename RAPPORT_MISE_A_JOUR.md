@@ -72,19 +72,10 @@ Template de configuration avec :
 
 ---
 
-### 🧪 5. OUTIL DE TEST
+### 🧪 5. VÉRIFICATION SÉCURITÉ (CHECKLIST)
 
-**Fichier créé:** `htdocs/test_deployment.php`
-
-**Tests effectués :**
-1. ✅ Connexion base de données
-2. ✅ Vérification tables existantes
-3. ✅ Protection fichiers sensibles (.htaccess)
-4. ✅ Permissions dossiers uploads
-5. ✅ Configuration PHP (upload_max_filesize, etc.)
-6. ✅ Extensions PHP requises
-7. ✅ Fonctions de sécurité (CSRF)
-8. ✅ État mots de passe (hachés vs texte clair)
+L'outil `htdocs/test_deployment.php` a été supprimé après validation.
+Pour effectuer la même vérification, se référer à `GUIDE_DEPLOIEMENT_SECURITE.md`.
 
 ---
 
@@ -114,7 +105,6 @@ M-moire_officielle-/
 │   └── ... (autres scripts)
 ├── htdocs/
 │   ├── register.php ✅ MODIFIÉ (min 8 car)
-│   ├── test_deployment.php ✅ NOUVEAU
 │   └── ... (autres pages)
 ├── uploads/
 │   ├── .htaccess ✅ EXISTANT
@@ -130,21 +120,16 @@ M-moire_officielle-/
 
 ### ÉTAPE 1: Tester l'Application Localement
 
-**1.1 Accéder à la page de test**
-```
-http://localhost/M-moire_officielle-/htdocs/test_deployment.php
-```
-
-Cette page vérifiera automatiquement :
+**1.1 Effectuer les vérifications manuelles**
 - Connexion BDD
 - Tables existantes
-- Protections .htaccess
-- Permissions
-- Configuration PHP
+- Protections `.htaccess`
+- Permissions des dossiers `uploads/`
+- Configuration PHP (uploads, extensions, limites)
 
 **1.2 Résultats attendus**
-- ✅ Tous les tests au vert
-- ⚠️ Possibles warnings sur mots de passe non migrés
+- ✅ Vérifications OK
+- ⚠️ Éventuels points d'attention (ex : mots de passe non migrés)
 
 ---
 

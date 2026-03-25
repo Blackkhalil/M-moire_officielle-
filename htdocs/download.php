@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../app/auth.php';
 require_once __DIR__ . '/../config/config.php';
 
@@ -67,6 +67,11 @@ try {
 	echo 'Erreur serveur';
 	exit;
 }
+
+
+
+
+
 
 
 

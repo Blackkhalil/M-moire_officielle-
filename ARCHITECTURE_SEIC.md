@@ -111,6 +111,10 @@ graph TB
 
 ## 🔐 Flux d'Authentification
 
+Le diagramme de séquences permet de cacher les interactions d'objets dans le cadre d'un scénario d'un Diagramme des cas d'utilisation. Dans un souci de simplification, on représente l'acteur principal à gauche du diagramme et les acteurs secondaires éventuels à droite du système. Le but étant de décrire comment se déroulent les actions entre les acteurs ou objets. La dimension verticale du diagramme représente le temps, permettant de visualiser l'enchaînement des actions dans le temps, et de spécifier la naissance et la mort d'objets. Les périodes d'activité des objets sont symbolisés par des rectangles, et ces objets dialoguent par le biais de messages. Les diagrammes de séquence permettent en gros de décrire les différents scénarios de cas d'utilisation du système.
+
+Ce diagramme de séquence illustre le scénario d'authentification simplifié d'un client sur la plateforme SEIC LBS. L'acteur principal (Client) est positionné à gauche, tandis que les composants du système (login.php, auth.php, Session PHP, MySQL) sont représentés à droite. Le flux temporel vertical montre l'enchaînement chronologique des interactions : de la requête GET initiale pour afficher le formulaire de connexion, jusqu'à la création de la session utilisateur et la redirection vers le tableau de bord en cas de succès, ou l'affichage d'un message d'erreur en cas d'échec d'authentification.
+
 ```mermaid
 sequenceDiagram
     participant Client as 👤 Client (Navigateur)
@@ -145,6 +149,10 @@ sequenceDiagram
 ---
 
 ## 📤 Flux Upload de Fichiers (Rapport PDF)
+
+Le diagramme de séquences permet de cacher les interactions d'objets dans le cadre d'un scénario d'un Diagramme des cas d'utilisation. Dans un souci de simplification, on représente l'acteur principal à gauche du diagramme et les acteurs secondaires éventuels à droite du système. Le but étant de décrire comment se déroulent les actions entre les acteurs ou objets. La dimension verticale du diagramme représente le temps, permettant de visualiser l'enchaînement des actions dans le temps, et de spécifier la naissance et la mort d'objets. Les périodes d'activité des objets sont symbolisés par des rectangles, et ces objets dialoguent par le biais de messages. Les diagrammes de séquence permettent en gros de décrire les différents scénarios de cas d'utilisation du système.
+
+Ce diagramme de séquence décrit le scénario simplifié d'upload d'un fichier PDF (rapport) par un étudiant. L'acteur principal (Étudiant) est positionné à gauche, tandis que les composants du système (soumettre_rapport.php, soumission_rapport.php, upload_config.php, uploads/rapports/, MySQL) sont représentés à droite. Le flux temporel vertical illustre l'enchaînement chronologique des opérations : de l'accès au formulaire d'upload jusqu'à la validation du fichier, sa sauvegarde sur le système de fichiers, l'enregistrement en base de données, la création de notifications, et enfin l'affichage d'un message de succès ou d'erreur selon le résultat de la validation.
 
 ```mermaid
 sequenceDiagram
@@ -187,6 +195,10 @@ sequenceDiagram
 ---
 
 ## 🔔 Flux Notifications Temps Réel
+
+Le diagramme de séquences permet de cacher les interactions d'objets dans le cadre d'un scénario d'un Diagramme des cas d'utilisation. Dans un souci de simplification, on représente l'acteur principal à gauche du diagramme et les acteurs secondaires éventuels à droite du système. Le but étant de décrire comment se déroulent les actions entre les acteurs ou objets. La dimension verticale du diagramme représente le temps, permettant de visualiser l'enchaînement des actions dans le temps, et de spécifier la naissance et la mort d'objets. Les périodes d'activité des objets sont symbolisés par des rectangles, et ces objets dialoguent par le biais de messages. Les diagrammes de séquence permettent en gros de décrire les différents scénarios de cas d'utilisation du système.
+
+Ce diagramme de séquence illustre le scénario de récupération et de gestion des notifications en temps réel pour un étudiant. L'acteur principal (Étudiant) est positionné à gauche, tandis que les composants du système (dashboard.php, JavaScript, api/notifications.php, notification_manager.php, MySQL) sont représentés à droite. Le flux temporel vertical montre l'enchaînement chronologique des interactions : du chargement initial du tableau de bord jusqu'à la mise à jour périodique (toutes les 30 secondes) des notifications non lues via des requêtes AJAX asynchrones, ainsi que le marquage d'une notification comme lue lorsque l'utilisateur interagit avec elle.
 
 ```mermaid
 sequenceDiagram
@@ -290,6 +302,10 @@ graph LR
 
 ## 🔄 Diagramme de Séquence - Connexion Complète
 
+Le diagramme de séquences permet de cacher les interactions d'objets dans le cadre d'un scénario d'un Diagramme des cas d'utilisation. Dans un souci de simplification, on représente l'acteur principal à gauche du diagramme et les acteurs secondaires éventuels à droite du système. Le but étant de décrire comment se déroulent les actions entre les acteurs ou objets. La dimension verticale du diagramme représente le temps, permettant de visualiser l'enchaînement des actions dans le temps, et de spécifier la naissance et la mort d'objets. Les périodes d'activité des objets sont symbolisés par des rectangles, et ces objets dialoguent par le biais de messages. Les diagrammes de séquence permettent en gros de décrire les différents scénarios de cas d'utilisation du système.
+
+Ce diagramme de séquence illustre le scénario complet de connexion d'un utilisateur à la plateforme SEIC LBS. L'acteur principal (Utilisateur) est positionné à gauche, tandis que les composants du système (Navigateur, login.php, auth.php, Session, MySQL, dashboard.php) sont représentés à droite. Le flux temporel vertical montre l'enchaînement chronologique des interactions : de l'accès initial à la page de connexion jusqu'à l'affichage du tableau de bord personnalisé ou l'affichage d'un message d'erreur en cas d'échec d'authentification.
+
 ```mermaid
 sequenceDiagram
     participant U as 👤 Utilisateur
@@ -343,6 +359,10 @@ sequenceDiagram
 ---
 
 ## 📊 Diagramme de Séquence - Soumission Rapport
+
+Le diagramme de séquences permet de cacher les interactions d'objets dans le cadre d'un scénario d'un Diagramme des cas d'utilisation. Dans un souci de simplification, on représente l'acteur principal à gauche du diagramme et les acteurs secondaires éventuels à droite du système. Le but étant de décrire comment se déroulent les actions entre les acteurs ou objets. La dimension verticale du diagramme représente le temps, permettant de visualiser l'enchaînement des actions dans le temps, et de spécifier la naissance et la mort d'objets. Les périodes d'activité des objets sont symbolisés par des rectangles, et ces objets dialoguent par le biais de messages. Les diagrammes de séquence permettent en gros de décrire les différents scénarios de cas d'utilisation du système.
+
+Ce diagramme de séquence décrit le scénario de soumission d'un rapport PDF par un étudiant. L'acteur principal (Étudiant) est positionné à gauche, tandis que les composants du système (Navigateur, soumettre_rapport.php, auth.php, soumission_rapport.php, upload_config.php, uploads/rapports/, MySQL, notification_manager.php) sont représentés à droite. Le flux temporel vertical illustre l'enchaînement chronologique des opérations : de l'accès au formulaire de soumission jusqu'à la sauvegarde du fichier, l'enregistrement en base de données, la création de notifications pour les organisateurs, et enfin la redirection vers la page de suivi des soumissions ou l'affichage d'un message d'erreur en cas de problème de validation.
 
 ```mermaid
 sequenceDiagram

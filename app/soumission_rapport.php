@@ -16,7 +16,7 @@
 // On vérifie d'abord que l'utilisateur est connecté et qu'il est étudiant
 require_once __DIR__ . '/../app/auth.php';
 if (!is_logged_in() || current_user()['role'] !== 'etudiant') {
-    header('Location: ../public/login.php');
+    header('Location: ../htdocs/login.php');
     exit;
 }
 
@@ -34,6 +34,7 @@ $projets = $pdo->query('SELECT * FROM projets ORDER BY nom')->fetchAll(PDO::FETC
 
 // Si le formulaire a été soumis, on traite la soumission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_valid_csrf();
     $id_projet_raw = $_POST['id_projet'] ?? null;
     
     // On valide d'abord la sélection du projet (important pour éviter les erreurs)

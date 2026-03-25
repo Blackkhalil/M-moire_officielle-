@@ -1,21 +1,4 @@
-# Sécuriser le dossier uploads
-Order Deny,Allow
-Deny from all
-
-# Permettre l'accès uniquement via PHP
-<Files "*.pdf">
-    Order Allow,Deny
-    Deny from all
-</Files>
-
-# Permettre les fichiers PowerPoint (accès contrôlé via PHP)
-<Files "*.ppt">
-    Order Allow,Deny
-    Deny from all
-</Files>
-
-<Files "*.pptx">
-    Order Allow,Deny
-    Deny from all
-</Files>
+# Sécuriser le dossier uploads (accès uniquement via scripts PHP contrôlés)
+Require all denied
+Options -Indexes
 

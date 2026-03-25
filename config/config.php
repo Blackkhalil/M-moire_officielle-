@@ -12,8 +12,35 @@
  * @version 2.0 - Production Ready
  */
 
+// Chargement simple des variables d'environnement depuis .env (si présent)
+$env_file = __DIR__ . '/../.env';
+if (is_file($env_file) && is_readable($env_file)) {
+    $env_lines = file($env_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($env_lines as $env_line) {
+        if ($env_line === '' || $env_line[0] === '#') {
+            continue;
+        }
+        $parts = explode('=', $env_line, 2);
+        if (count($parts) !== 2) {
+            continue;
+        }
+        $key = trim($parts[0]);
+        $value = trim($parts[1]);
+        if ($key !== '' && getenv($key) === false) {
+            putenv($key . '=' . $value);
+            $_ENV[$key] = $value;
+            $_SERVER[$key] = $value;
+        }
+    }
+}
+
+function env_value($key, $default = null) {
+    $value = getenv($key);
+    return ($value === false || $value === '') ? $default : $value;
+}
+
 // Configuration environnement
-define('APP_ENV', 'development'); // Changer en 'production' pour le déploiement
+define('APP_ENV', env_value('APP_ENV', 'development'));
 
 // Gestion des erreurs selon l'environnement
 if (APP_ENV === 'production') {
@@ -29,19 +56,19 @@ if (APP_ENV === 'production') {
 }
 
 // Configuration de la base de données MySQL
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'seic_lbs');
-define('DB_USER', 'root');
-define('DB_PASS', ''); // À configurer avec un mot de passe fort en production
+define('DB_HOST', env_value('DB_HOST', 'localhost'));
+define('DB_NAME', env_value('DB_NAME', 'seic_lbs'));
+define('DB_USER', env_value('DB_USER', 'root'));
+define('DB_PASS', env_value('DB_PASS', ''));
 
 // Clé secrète JWT (GÉNÉRÉE AUTOMATIQUEMENT - NE PAS PARTAGER)
-define('JWT_SECRET', 'f611c6ade42fbd889d683b90735e1ea69dce8069a09877fb74e874d1c346b872');
+define('JWT_SECRET', env_value('JWT_SECRET', 'CHANGE_ME_IN_ENV'));
 
 // Dossier des fichiers uploadés
 define('UPLOADS_DIR', __DIR__ . '/../uploads/');
 
 // URL de base du site
-define('BASE_URL', '/M-moire_officielle-/htdocs/');
+define('BASE_URL', env_value('BASE_URL', '/M-moire_officielle-/htdocs/'));
 
 // Connexion PDO sécurisée
 try {
@@ -67,4 +94,3 @@ try {
         die('❌ Erreur de connexion à la base de données : ' . $e->getMessage());
     }
 }
-?>

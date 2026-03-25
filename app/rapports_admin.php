@@ -15,7 +15,7 @@
 // On vérifie que l'utilisateur est connecté et qu'il est organisateur
 require_once __DIR__ . '/../app/auth.php';
 if (!is_logged_in() || current_user()['role'] !== 'organisateur') {
-    header('Location: ../public/login.php');
+    header('Location: ../htdocs/login.php');
     exit;
 }
 require_once __DIR__ . '/../config/config.php';
@@ -39,6 +39,7 @@ function notifier_membres($projet_membres, $sujet, $message) {
 
 // Traitement des actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_valid_csrf();
     $action = $_POST['action'] ?? '';
     $rapport_id = $_POST['rapport_id'] ?? null;
     $commentaire = $_POST['commentaire'] ?? '';

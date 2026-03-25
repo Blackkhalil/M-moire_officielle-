@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../app/auth.php';
 if (!is_logged_in() || current_user()['role'] !== 'organisateur') {
-    header('Location: ../public/login.php');
+    header('Location: ../htdocs/login.php');
     exit;
 }
 require_once __DIR__ . '/../config/config.php';
@@ -11,6 +11,7 @@ $error = '';
 
 // Traitement des actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_valid_csrf();
     $action = $_POST['action'] ?? '';
     $presentation_id = $_POST['presentation_id'] ?? null;
     $commentaire = $_POST['commentaire'] ?? '';
