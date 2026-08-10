@@ -2,7 +2,7 @@
 require_once __DIR__ . '/bootstrap.php';
 
 if (!is_logged_in()) {
-    redirect_to('login.php');
+    redirect_to_login();
 }
 
 $user = current_user();
