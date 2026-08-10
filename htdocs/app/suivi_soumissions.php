@@ -7,7 +7,7 @@
 // Vérification de l'authentification
 require_once __DIR__ . '/auth.php';
 if (!is_logged_in() || current_user()['role'] !== 'etudiant') {
-    redirect_to('login.php');
+    redirect_to_login();
 }
 require_once __DIR__ . '/../config/config.php';
 

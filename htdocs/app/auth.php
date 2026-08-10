@@ -158,6 +158,32 @@ function is_staff(): bool
     return is_organisateur();
 }
 
+/**
+ * Valide qu'un chemin de redirection est interne (évite les "open redirects").
+ * Retourne null si le chemin est absent ou pointe vers un site externe.
+ */
+function safe_redirect_target(?string $path): ?string
+{
+    if ($path === null || $path === '') {
+        return null;
+    }
+    if (str_starts_with($path, '//') || str_contains($path, '://') || str_starts_with($path, '\\')) {
+        return null;
+    }
+    return $path;
+}
+
+/**
+ * Redirige vers login.php en conservant la page demandée (via ?redirect=...),
+ * pour que l'utilisateur y arrive directement une fois connecté
+ * (ex. lien "Consulter la soumission" reçu par e-mail).
+ */
+function redirect_to_login(): void
+{
+    $current = safe_redirect_target($_SERVER['REQUEST_URI'] ?? null);
+    redirect_to($current ? 'login.php?redirect=' . urlencode($current) : 'login.php');
+}
+
 function generate_csrf_token() {
     if (!isset($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));

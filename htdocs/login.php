@@ -3,6 +3,7 @@ require_once __DIR__ . '/bootstrap.php';
 
 $error = '';
 $success = '';
+$redirect = safe_redirect_target($_POST['redirect'] ?? $_GET['redirect'] ?? null);
 
 if (isset($_GET['inscription']) && $_GET['inscription'] === 'success') {
     $success = 'Inscription réussie ! Vous pouvez maintenant vous connecter.';
@@ -20,6 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf_token($csrf)) {
         $error = 'Session expirée. Rechargez la page et réessayez.';
     } elseif (login($email, $mot_de_passe)) {
+        // $redirect provient de REQUEST_URI et contient déjà le préfixe BASE_URL :
+        // on redirige directement dessus (redirect_to()/url_to() le préfixeraient une 2e fois).
+        if ($redirect) {
+            header('Location: ' . $redirect);
+            exit;
+        }
         redirect_to('dashboard.php');
     } else {
         $error = 'Email ou mot de passe incorrect.';
@@ -73,6 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <form method="post" class="login-form" autocomplete="on">
                     <?= csrf_input() ?>
+                    <?php if ($redirect): ?>
+                        <input type="hidden" name="redirect" value="<?= htmlspecialchars($redirect, ENT_QUOTES, 'UTF-8') ?>">
+                    <?php endif; ?>
                     <div class="form-group">
                         <label for="email" class="form-label">
                             <i class="fas fa-envelope"></i>

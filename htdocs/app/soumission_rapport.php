@@ -16,7 +16,7 @@
 // On vérifie d'abord que l'utilisateur est connecté et qu'il est étudiant
 require_once __DIR__ . '/auth.php';
 if (!is_logged_in() || current_user()['role'] !== 'etudiant') {
-    redirect_to('login.php');
+    redirect_to_login();
 }
 
 // On charge la configuration de la base de données et les paramètres d'upload

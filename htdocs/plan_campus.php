@@ -1,8 +1,7 @@
 ﻿<?php
 require_once __DIR__ . '/bootstrap.php';
 if (!is_logged_in()) {
-    header('Location: login.php');
-    exit;
+    redirect_to_login();
 }
 $salles = $pdo->query('SELECT * FROM salles ORDER BY nom')->fetchAll(PDO::FETCH_ASSOC);
 $groupes = $pdo->query('SELECT g.*, s.nom AS salle_nom FROM groupes g JOIN salles s ON g.id_salle = s.id')->fetchAll(PDO::FETCH_ASSOC);
