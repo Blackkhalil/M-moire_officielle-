@@ -1,278 +1,398 @@
-# ✅ DIAGRAMMES UML ACTUALISÉS - SEIC LBS
+# Diagrammes UML — SEIC LBS
 
-## 🔄 Mise à Jour Effectuée
+**Fichier Draw.io (contexte + global + détaillés) :** [`diagrammes/SEIC_Cas_Utilisation.drawio`](diagrammes/SEIC_Cas_Utilisation.drawio)
 
-Les diagrammes UML ont été mis à jour pour refléter correctement que **l'Organisateur cumule également le rôle d'Administrateur** du système.
+Ouvrir avec [diagrams.net](https://app.diagrams.net) ou l’extension Draw.io intégrée à VS Code / Cursor.
 
----
+**Version :** 3.0 — Juillet 2026  
+**Acteurs :** Étudiant, Organisateur (administrateur du site), Visiteur (non connecté ou inscrit)
 
-## 📊 Acteurs du Système (Mise à Jour)
-
-### Avant
-- ❌ 4 acteurs : Étudiant, Organisateur, Visiteur, **Administrateur** (séparé)
-
-### Après ✅
-- ✅ **3 acteurs** : Étudiant, **Organisateur/Administrateur**, Visiteur
-- L'Organisateur possède tous les droits d'administration
+> **Règle métier :** il n'existe pas de rôle `admin` séparé. L'**organisateur** cumule toutes les fonctions d'administration.
 
 ---
 
-## 🎯 Rôle Organisateur/Administrateur
+## 1. Diagramme de contexte
 
-### 🔹 Fonctions d'Organisation (SEIC)
-1. Validation des rapports et présentations
-2. Ajout de commentaires sur les soumissions
-3. Gestion des éditions SEIC (années)
-4. Attribution des groupes et salles
-5. Consultation des rapports en attente
-6. Téléchargement des documents
+```mermaid
+flowchart LR
+    subgraph Acteurs
+        E[Étudiant]
+        O[Organisateur]
+        V[Visiteur]
+    end
 
-### 🔹 Fonctions d'Administration (Système)
-1. **Gestion des utilisateurs** (CRUD complet)
-   - Créer un utilisateur
-   - Modifier un utilisateur
-   - Supprimer un utilisateur
-2. **Rapports administratifs**
-   - Statistiques globales du système
-   - Rapports d'activité
-3. **Monitoring système**
-   - Consultation des logs
-   - Surveillance des performances
+    SEIC[(Plateforme SEIC LBS)]
 
-### 🎯 Total : 14 cas d'utilisation
-(9 organisation + 5 administration)
+    E -->|Soumet projets, rapports, PPT| SEIC
+    E -->|Consulte ses soumissions| SEIC
+    O -->|Valide, organise, administre| SEIC
+    V -->|Consulte le site| SEIC
 
----
-
-## 📐 Diagrammes Mis à Jour
-
-### 1. **Diagramme de Contexte** 🌍
-✅ Changement : 3 acteurs au lieu de 4
-- Étudiant
-- **Organisateur/Administrateur** (fusionné)
-- Visiteur
-
-**Nouvelles interactions :**
-- ORG → Administre système
-- ORG → Gère utilisateurs
-
----
-
-### 2. **Diagramme de Cas d'Utilisation Globale** 👥
-✅ Changement : Regroupement des fonctionnalités
-- **Validation & Organisation** (5 cas)
-- **Administration Système** (3 cas)
-- Total Organisateur : **14 cas d'utilisation**
-
-**Nouveaux cas ajoutés :**
-- UC19 : Gérer utilisateurs
-- UC20 : Voir rapports admin
-- UC21 : Voir statistiques globales
-
----
-
-### 3. **Diagramme de Cas d'Utilisation Détaillé - Organisateur** 🔍
-✅ Changement : Ajout d'un sous-graphe "Fonctionnalités Administration"
-
-**Nouveaux cas détaillés :**
-- Gérer utilisateurs
-- Créer/Modifier utilisateur
-- Supprimer utilisateur
-- Voir rapports admin
-- Voir statistiques globales
-- Consulter logs système
-
----
-
-### 4. **Diagramme de Classes** 🏗️
-✅ Changement : Classe Organisateur enrichie
-
-**Nouveaux attributs :**
-- `-array utilisateursGeres`
-
-**Nouvelles méthodes :**
-```php
-+gererUtilisateur(userId, action, data) bool
-+creerUtilisateur(data) Utilisateur
-+modifierUtilisateur(userId, data) bool
-+supprimerUtilisateur(userId) bool
-+consulterLogsSysteme() array
-+genererRapportAdmin() array
-```
-
-**Note mise à jour :**
-> "Cumule rôles : Organisation SEIC + Administration système"
-
----
-
-## 📋 Récapitulatif des Acteurs
-
-| Acteur | Cas d'utilisation | Rôles |
-|--------|-------------------|-------|
-| **👨‍🎓 Étudiant** | 10 | Soumission projets/rapports, suivi |
-| **👨‍💼 Organisateur/Admin** | 14 | Organisation SEIC + Administration système |
-| **👁️ Visiteur** | 6 | Consultation publique, commentaires |
-| **TOTAL** | **30** | - |
-
----
-
-## 🔍 Justification du Cumul de Rôles
-
-### Pourquoi Organisateur = Administrateur ?
-
-#### 1. **Cohérence Métier**
-- L'organisateur du SEIC doit pouvoir gérer tous les aspects
-- Création de comptes pour nouveaux étudiants/visiteurs
-- Gestion des éditions passées et futures
-
-#### 2. **Simplicité d'Utilisation**
-- Pas besoin de deux comptes différents
-- Interface unifiée pour toutes les tâches
-- Moins de confusion pour les utilisateurs
-
-#### 3. **Sécurité**
-- Un seul rôle à sécuriser (organisateur)
-- Moins de risques de conflits de permissions
-- Gestion centralisée des droits
-
-#### 4. **Réalité du Projet**
-- Petit nombre d'organisateurs (1-3 personnes)
-- Structure LBS compacte
-- Pas besoin de séparation stricte des rôles
-
----
-
-## 💡 Implications Techniques
-
-### Base de Données
-**Table `utilisateurs`** :
-```sql
-CREATE TABLE utilisateurs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    mot_de_passe VARCHAR(255) NOT NULL,
-    role ENUM('etudiant','organisateur','visiteur') NOT NULL
-    -- Pas besoin d'un rôle 'administrateur' séparé
-);
-```
-
-### Code Backend
-**Vérification des droits d'administration** :
-```php
-function isAdmin() {
-    return current_user()['role'] === 'organisateur';
-}
-
-function canManageUsers() {
-    return isAdmin(); // Organisateur = Admin
-}
-```
-
-### Interface Frontend
-**Dashboard Organisateur** :
-```
-┌─────────────────────────────────────┐
-│   DASHBOARD ORGANISATEUR/ADMIN      │
-├─────────────────────────────────────┤
-│ ORGANISATION SEIC                   │
-│ - Valider rapports                  │
-│ - Gérer éditions                    │
-│ - Attribuer salles                  │
-├─────────────────────────────────────┤
-│ ADMINISTRATION                      │
-│ - Gérer utilisateurs                │
-│ - Rapports système                  │
-│ - Logs activité                     │
-└─────────────────────────────────────┘
+    SEIC --> MySQL[(MySQL seic_lbs)]
+    SEIC --> FS[Dossier uploads]
+    SEIC --> Mail[Email notifications]
 ```
 
 ---
 
-## ✅ Avantages de cette Approche
+## 2. Diagramme global des cas d'utilisation
 
-### Pour l'Utilisateur
-1. ✅ **Interface simplifiée** : Un seul dashboard
-2. ✅ **Efficacité** : Accès direct à toutes les fonctions
-3. ✅ **Cohérence** : Gestion unifiée
+```mermaid
+flowchart TB
+    subgraph Commun
+        UC00[UC00 Se connecter]
+        UC01[UC01 S'inscrire]
+        UC02[UC02 Se déconnecter]
+    end
 
-### Pour le Développeur
-1. ✅ **Code plus simple** : Moins de conditions sur les rôles
-2. ✅ **Maintenance facilitée** : Un seul rôle privilégié à gérer
-3. ✅ **Tests simplifiés** : Moins de scénarios à tester
+    subgraph Organisateur
+        UC10[UC10 Gérer les éditions]
+        UC11[UC11 Gérer les projets]
+        UC12[UC12 Valider les rapports]
+        UC13[UC13 Valider les présentations]
+        UC14[UC14 Gérer groupes et salles]
+        UC15[UC15 Consulter projets par édition]
+        UC16[UC16 Importer PDF]
+        UC17[UC17 Exporter une édition ZIP]
+    end
 
-### Pour la Sécurité
-1. ✅ **Moins de surface d'attaque** : Un seul rôle admin
-2. ✅ **Gestion centralisée** : Tous les droits au même endroit
-3. ✅ **Audit facilité** : Traçabilité claire
+    subgraph Étudiant
+        UC20[UC20 Soumettre un projet]
+        UC21[UC21 Soumettre un rapport PDF]
+        UC22[UC22 Soumettre une présentation]
+        UC23[UC23 Suivre ses soumissions]
+        UC24[UC24 Consulter les projets]
+    end
 
----
+    subgraph Visiteur
+        UC30[UC30 Consulter l'accueil]
+        UC31[UC31 Consulter les projets publics]
+        UC32[UC32 Laisser un commentaire]
+    end
 
-## 📚 Fichiers Mis à Jour
-
-1. **`DIAGRAMMES_UML.md`**
-   - Diagramme de Contexte
-   - Diagramme de Cas d'Utilisation Globale
-   - Diagramme de Cas d'Utilisation Détaillé - Organisateur
-   - Diagramme de Classes
-   - Toutes les explications textuelles
-
-2. **`GUIDE_DIAGRAMMES_UML.md`**
-   - Récapitulatif des acteurs
-   - Statistiques mises à jour
-
----
-
-## 🎯 Résumé des Changements
-
-| Élément | Avant | Après |
-|---------|-------|-------|
-| **Nombre d'acteurs** | 4 | **3** |
-| **Rôles distincts** | Organisateur + Administrateur | **Organisateur/Administrateur** (fusionné) |
-| **Cas d'utilisation Org** | 9 | **14** (+5) |
-| **Total cas d'utilisation** | 28 | **30** (+2) |
-| **Classes modifiées** | - | **Organisateur** (6 nouvelles méthodes) |
+    O((Organisateur)) --- UC10 & UC11 & UC12 & UC13 & UC14 & UC15 & UC16 & UC17
+    E((Étudiant)) --- UC20 & UC21 & UC22 & UC23 & UC24
+    V((Visiteur)) --- UC30 & UC31 & UC32
+    O & E & V --- UC00 & UC01 & UC02
+```
 
 ---
 
-## 📖 Comment Utiliser les Diagrammes Mis à Jour
+## 3. Cas d'utilisation détaillés
 
-### 1. Consulter les Diagrammes
-Ouvrir `DIAGRAMMES_UML.md` dans :
-- GitHub/GitLab (rendu automatique)
-- VS Code (extension Mermaid)
-- https://mermaid.live
+### 3.1 Organisateur
 
-### 2. Comprendre le Rôle Organisateur
-- Section 3.2 : Cas d'utilisation détaillé
-- Section 6 : Diagramme de classes (méthodes enrichies)
+| ID | Cas d'utilisation | Préconditions | Postconditions |
+|----|-------------------|---------------|----------------|
+| UC10 | Gérer les éditions | Connecté, rôle organisateur | Édition créée/modifiée/supprimée |
+| UC11 | Gérer les projets | Connecté, rôle organisateur | Projet enregistré en BDD |
+| UC12 | Valider les rapports | Rapport en attente | État `valide` ou `refuse` + commentaire |
+| UC13 | Valider les présentations | Présentation en attente | État mis à jour |
+| UC14 | Gérer groupes et salles | Connecté, rôle organisateur | Attribution groupe/salle |
+| UC15 | Projets par édition | Édition existante | Liste filtrée affichée |
+| UC16 | Importer PDF | Fichier PDF valide | Rapport enregistré |
+| UC17 | Exporter ZIP | Édition sélectionnée | Archive téléchargée |
 
-### 3. Présenter le Projet
-Les diagrammes sont prêts pour :
-- Votre mémoire/rapport
-- Votre soutenance
-- La documentation technique
+### 3.2 Étudiant
+
+| ID | Cas d'utilisation | Préconditions | Postconditions |
+|----|-------------------|---------------|----------------|
+| UC20 | Soumettre un projet | Connecté, rôle étudiant | Projet créé |
+| UC21 | Soumettre un rapport | Projet existant, PDF | Rapport `en_attente` |
+| UC22 | Soumettre présentation | Projet existant, PPT | Présentation `en_attente` |
+| UC23 | Suivi soumissions | Au moins une soumission | Statuts affichés |
+| UC24 | Consulter projets | Connecté | Liste + commentaires visibles |
+
+### 3.3 Visiteur
+
+| ID | Cas d'utilisation | Préconditions | Postconditions |
+|----|-------------------|---------------|----------------|
+| UC30 | Consulter l'accueil | Aucune | Page index affichée |
+| UC31 | Consulter projets | Compte visiteur ou accès public | Projets listés |
+| UC32 | Laisser commentaire | Connecté visiteur, projet ouvert | Commentaire en BDD |
+
+### 3.4 Commun
+
+| ID | Cas d'utilisation | Acteurs | Résultat |
+|----|-------------------|---------|----------|
+| UC00 | Se connecter | Tous | Session ouverte, redirection dashboard |
+| UC01 | S'inscrire | Étudiant, Visiteur | Compte créé, hash bcrypt |
+| UC02 | Se déconnecter | Tous connectés | Session détruite |
 
 ---
 
-## ✨ Conclusion
+## 4. Diagrammes de séquence
 
-Les diagrammes UML ont été **actualisés** pour refléter correctement la réalité du système :
+### UC00 — Se connecter
 
-✅ **3 acteurs** (au lieu de 4)  
-✅ **Organisateur/Administrateur** (rôle fusionné)  
-✅ **14 cas d'utilisation** pour l'organisateur  
-✅ **Cohérence** entre tous les diagrammes  
+```mermaid
+sequenceDiagram
+    actor U as Utilisateur
+    participant L as login.php
+    participant A as auth.php
+    participant DB as MySQL
 
-**Les diagrammes sont maintenant alignés avec l'implémentation réelle du système SEIC LBS !**
+    U->>L: POST email + mot de passe
+    L->>L: verify_csrf_token()
+    L->>A: login(email, password)
+    A->>DB: SELECT utilisateurs WHERE email
+    DB-->>A: utilisateur + hash
+    A->>A: password_verify()
+    A->>A: session_regenerate_id()
+    A-->>L: true
+    L->>U: redirect dashboard.php
+```
+
+### UC12 — Valider un rapport (Organisateur)
+
+```mermaid
+sequenceDiagram
+    actor O as Organisateur
+    participant R as rapports_admin.php
+    participant DB as MySQL
+
+    O->>R: Ouvrir page gestion rapports
+    R->>R: is_organisateur()
+    R->>DB: SELECT rapports JOIN projets
+    DB-->>R: liste rapports
+    O->>R: POST valider/refuser + commentaire
+    R->>DB: UPDATE rapports SET etat_validation
+    DB-->>R: OK
+    R-->>O: Confirmation affichée
+```
+
+### UC21 — Soumettre un rapport (Étudiant)
+
+```mermaid
+sequenceDiagram
+    actor E as Étudiant
+    participant S as soumission_rapport.php
+    participant FS as uploads/rapports
+    participant DB as MySQL
+
+    E->>S: POST formulaire + fichier PDF
+    S->>S: is_logged_in() + rôle étudiant
+    S->>S: Validation type/taille fichier
+    S->>FS: move_uploaded_file()
+    S->>DB: INSERT INTO rapports
+    DB-->>S: id rapport
+    S-->>E: Message succès
+```
+
+### UC32 — Laisser un commentaire (Visiteur inscrit)
+
+```mermaid
+sequenceDiagram
+    actor V as Visiteur
+    participant P as visitor_projects.php
+    participant C as commentaires.php
+    participant DB as MySQL
+
+    V->>P: Consulter projets édition
+    V->>C: POST commentaire
+    C->>DB: INSERT INTO commentaires
+    DB-->>C: OK
+    C-->>V: Redirection avec succès
+```
 
 ---
 
-**Date de mise à jour :** 2026-01-22  
-**Version :** 2.0  
-**Statut :** ✅ ACTUALISÉ
+## 5. Diagrammes d'activité
+
+### UC00 — Connexion
+
+```mermaid
+flowchart TD
+    A[Début] --> B[Afficher formulaire]
+    B --> C{POST reçu ?}
+    C -->|Non| B
+    C -->|Oui| D{CSRF valide ?}
+    D -->|Non| E[Erreur session]
+    D -->|Oui| F[Rechercher utilisateur]
+    F --> G{Trouvé ?}
+    G -->|Non| H[Erreur identifiants]
+    G -->|Oui| I{password_verify ?}
+    I -->|Non| H
+    I -->|Oui| J[Créer session]
+    J --> K[Rediriger dashboard]
+    E --> B
+    H --> B
+```
+
+### UC12 — Validation rapport
+
+```mermaid
+flowchart TD
+    A[Début] --> B{Organisateur connecté ?}
+    B -->|Non| C[Rediriger login]
+    B -->|Oui| D[Lister rapports en attente]
+    D --> E{Sélection action}
+    E -->|Valider| F[etat = valide]
+    E -->|Refuser| G[etat = refuse]
+    F --> H[Ajouter commentaire optionnel]
+    G --> H
+    H --> I[UPDATE BDD]
+    I --> J[Fin]
+```
+
+### UC21 — Soumission rapport PDF
+
+```mermaid
+flowchart TD
+    A[Début] --> B{Étudiant connecté ?}
+    B -->|Non| C[Rediriger login]
+    B -->|Oui| D[Sélectionner projet]
+    D --> E[Choisir fichier PDF]
+    E --> F{Format PDF et taille OK ?}
+    F -->|Non| G[Message erreur]
+    F -->|Oui| H[Enregistrer fichier uploads]
+    H --> I[INSERT rapports en_attente]
+    I --> J[Fin succès]
+    G --> D
+```
 
 ---
 
-**Auteur :** Khalil  
-**Projet :** SEIC LBS - Lomé Business School
+## 6. Diagramme de classes
+
+```mermaid
+classDiagram
+    class Utilisateur {
+        +int id
+        +string nom
+        +string email
+        +string mot_de_passe
+        +enum role
+        +seConnecter()
+        +seDeconnecter()
+    }
+
+    class Edition {
+        +int id
+        +year annee
+        +string description
+        +date date_debut
+        +date date_fin
+    }
+
+    class Projet {
+        +int id
+        +string nom
+        +string description
+        +string categorie
+        +int id_edition
+        +int id_utilisateur
+    }
+
+    class Rapport {
+        +int id
+        +int id_projet
+        +datetime date_soumission
+        +string fichier
+        +enum etat_validation
+        +string commentaire
+    }
+
+    class Presentation {
+        +int id
+        +int id_projet
+        +string nom_fichier
+        +string chemin_fichier
+        +enum etat_validation
+    }
+
+    class Commentaire {
+        +int id
+        +int id_projet
+        +int id_utilisateur
+        +string commentaire
+        +datetime date_creation
+    }
+
+    class Organisateur {
+        +gererEditions()
+        +gererProjets()
+        +validerRapport()
+        +validerPresentation()
+        +gererGroupesSalles()
+    }
+
+    class Etudiant {
+        +soumettreProjet()
+        +soumettreRapport()
+        +soumettrePresentation()
+        +suivreSoumissions()
+    }
+
+    Utilisateur <|-- Organisateur
+    Utilisateur <|-- Etudiant
+    Utilisateur <|-- Visiteur
+    Edition "1" --> "*" Projet
+    Projet "1" --> "*" Rapport
+    Projet "1" --> "*" Presentation
+    Projet "1" --> "*" Commentaire
+    Utilisateur --> Commentaire
+```
+
+---
+
+## 7. Diagramme de déploiement
+
+```mermaid
+flowchart TB
+    subgraph Client
+        Browser[Navigateur Web]
+    end
+
+    subgraph Serveur_WAMP
+        Apache[Apache HTTP Server]
+        PHP[PHP 8.x]
+        subgraph App
+            Htdocs[htdocs/ pages publiques]
+            AppLogic[app/ logique métier]
+            Config[config/]
+        end
+    end
+
+    subgraph Donnees
+        MySQL[(MySQL seic_lbs)]
+        Uploads[uploads/ rapports presentations]
+        Logs[logs/]
+    end
+
+    Browser -->|HTTP HTTPS| Apache
+    Apache --> PHP
+    PHP --> Htdocs
+    Htdocs --> AppLogic
+    AppLogic --> Config
+    AppLogic --> MySQL
+    AppLogic --> Uploads
+    PHP --> Logs
+```
+
+---
+
+## Correspondance code ↔ cas d'utilisation
+
+| UC | Fichier(s) principal(aux) |
+|----|---------------------------|
+| UC00 | `htdocs/login.php`, `app/auth.php` |
+| UC01 | `htdocs/register.php` |
+| UC02 | `htdocs/logout.php` |
+| UC10 | `htdocs/editions.php`, `app/editions.php` |
+| UC11 | `htdocs/projets.php`, `app/projets.php` |
+| UC12 | `htdocs/rapports_admin.php`, `app/rapports_admin.php` |
+| UC13 | `htdocs/gestion_powerpoint.php` |
+| UC14 | `htdocs/groupes_salles.php` |
+| UC15 | `htdocs/projets_edition.php` |
+| UC16 | `htdocs/import_pdf.php` |
+| UC17 | `htdocs/export_zip.php` |
+| UC20–22 | `htdocs/soumettre_*.php` |
+| UC23 | `htdocs/suivi_soumissions.php` |
+| UC24 | `htdocs/etudiant_projets.php` |
+| UC30 | `htdocs/index.php` |
+| UC31–32 | `htdocs/visitor_projects.php` |
+
+---
+
+**Auteur :** Khalil — Projet SEIC LBS, Lomé Business School

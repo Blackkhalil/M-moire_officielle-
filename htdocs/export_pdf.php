@@ -1,22 +1,17 @@
 <?php
-require_once __DIR__ . '/../app/auth.php';
+require_once __DIR__ . '/bootstrap.php';
 
-// Vérifier la connexion
 if (!is_logged_in()) {
-    header('Location: login.php');
-    exit;
+    redirect_to('login.php');
 }
 
 $user = current_user();
 $role = $user['role'];
 
 // Vérifier les permissions
-if (!in_array($role, ['administrateur', 'organisateur'])) {
+if (!in_array($role, ['organisateur'], true)) {
     die('Accès non autorisé');
 }
-
-require_once __DIR__ . '/../config/config.php';
-
 // Fonction pour exporter les rapports en PDF
 function exportRapportsPDF($pdo) {
     // Récupérer tous les rapports avec les informations des projets
@@ -160,13 +155,13 @@ function exportProjetsPDF($pdo) {
         <div class="projet">
             <h3>' . htmlspecialchars($projet['nom']) . '</h3>
             <div class="info">
-                <span class="label">Description :</span> ' . htmlspecialchars($projet['description']) . '
+                <span class="label">Description :</span> ' . htmlspecialchars((string) ($projet['description'] ?? '')) . '
             </div>
             <div class="info">
-                <span class="label">Catégorie :</span> ' . htmlspecialchars($projet['categorie']) . '
+                <span class="label">Catégorie :</span> ' . htmlspecialchars((string) ($projet['categorie'] ?? '')) . '
             </div>
             <div class="info">
-                <span class="label">Membres :</span> ' . htmlspecialchars($projet['membres']) . '
+                <span class="label">Membres :</span> ' . htmlspecialchars((string) ($projet['membres'] ?? '')) . '
             </div>
             <div class="info">
                 <span class="label">Édition :</span> ' . $projet['annee'] . '

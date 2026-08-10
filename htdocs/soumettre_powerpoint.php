@@ -1,5 +1,5 @@
-<?php
-require_once __DIR__ . '/../app/soumission_powerpoint.php';
+﻿<?php
+require_once __DIR__ . '/app/soumission_powerpoint.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -8,7 +8,7 @@ require_once __DIR__ . '/../app/soumission_powerpoint.php';
     <title>Soumettre une présentation - SEIC LBS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/modern-style.css?v=2.4">
+    <link rel="stylesheet" href="css/modern-style.css?v=2.6">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -62,7 +62,22 @@ require_once __DIR__ . '/../app/soumission_powerpoint.php';
                             <input type="file" class="form-control" id="presentation" name="presentation" accept=".ppt,.pptx" required>
                             <small class="form-text text-muted">
                                 <i class="fa-solid fa-info-circle me-1"></i>
-                                Formats acceptés : .ppt, .pptx | Taille maximale : 50MB
+                                Formats acceptés : .ppt, .pptx | Taille maximale : 50 Mo
+                            </small>
+                        </div>
+
+                        <div class="form-group mt-4 p-3 rounded border border-secondary-subtle bg-light">
+                            <label for="video_projet" class="form-label">
+                                <i class="fa-solid fa-video me-1"></i> Vidéo du projet <span class="text-muted fw-normal">(facultatif)</span>
+                            </label>
+                            <p class="small text-muted mb-2">
+                                Si votre PowerPoint contient une vidéo intégrée ou une démonstration en rapport avec le projet,
+                                déposez le fichier vidéo ici (extrait ou enregistrement séparé).
+                            </p>
+                            <input type="file" class="form-control" id="video_projet" name="video_projet" accept=".mp4,.webm,.mov,.avi,.mkv,video/*">
+                            <small class="form-text text-muted">
+                                <i class="fa-solid fa-info-circle me-1"></i>
+                                Formats : .mp4, .webm, .mov, .avi, .mkv | Taille maximale : 100 Mo
                             </small>
                         </div>
                         
@@ -71,7 +86,8 @@ require_once __DIR__ . '/../app/soumission_powerpoint.php';
                             <ul class="mb-0">
                                 <li>Assurez-vous que votre présentation est complète et bien structurée</li>
                                 <li>Vérifiez que tous les éléments multimédias fonctionnent correctement</li>
-                                <li>Le fichier sera vérifié par les organisateurs avant validation</li>
+                                <li>Ajoutez une vidéo si le diaporama en contient une ou pour illustrer votre projet</li>
+                                <li>Les fichiers seront vérifiés par les organisateurs avant validation</li>
                             </ul>
                         </div>
                         
@@ -94,6 +110,9 @@ require_once __DIR__ . '/../app/soumission_powerpoint.php';
             <div class="col-md-6 text-md-end text-center">
                 <a href="https://lome-bs.com/" class="text-white text-decoration-none me-3" target="_blank"><i class="fas fa-globe me-1"></i>Site LBS</a>
                 <a href="mailto:info@lomebs.com" class="text-white text-decoration-none"><i class="fas fa-envelope me-1"></i>Contact</a>
+                <a href="https://www.facebook.com/share/184CCko87w/?mibextid=wwXIfr" class="text-white text-decoration-none ms-3" target="_blank" rel="noopener" aria-label="Facebook LBS"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.linkedin.com/school/lom%C3%A9-business-school/posts/?feedView=all" class="text-white text-decoration-none ms-2" target="_blank" rel="noopener" aria-label="LinkedIn LBS"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/lome_business_school_officiel?igsh=ZGZzMmM0aTBjYzd0" class="text-white text-decoration-none ms-2" target="_blank" rel="noopener" aria-label="Instagram LBS"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </div>

@@ -56,8 +56,8 @@ CREATE TABLE rapports (
 
 -- Données de test
 INSERT INTO utilisateurs (nom, email, mot_de_passe, role) VALUES
-('Alice Dupont', 'alice@lbs.tg', 'test', 'etudiant'),
-('Bob Organisateur', 'bob@lbs.tg', 'test', 'organisateur'),
+('Keith', 'keith@lbs.tg', 'test', 'etudiant'),
+('Khalil', 'sibikhalil29@gmail.com', 'test', 'organisateur'),
 ('Visiteur Test', 'visiteur@lbs.tg', 'test', 'visiteur'),
 ('Marie Dubois', 'marie@lbs.tg', 'test', 'etudiant'),
 ('Sophie Laurent', 'sophie@lbs.tg', 'test', 'etudiant');
@@ -75,10 +75,10 @@ INSERT INTO groupes (nom, id_edition, id_salle) VALUES
 ('Groupe Beta', 2, 2);
 
 INSERT INTO projets (nom, description, categorie, membres, id_edition) VALUES
-('Projet Innovant', 'Un projet sur l''innovation.', 'Technologie', 'Alice Dupont, Jean K.', 1),
+('Projet Innovant', 'Un projet sur l''innovation.', 'Technologie', 'Keith, Jean K.', 1),
 ('Projet Social', 'Projet à impact social.', 'Impact Social', 'Bob Organisateur, Marie L.', 2),
-('Application Mobile SEIC', 'Développement d\'une application mobile pour la SEIC', 'Technologie', 'Alice Dupont, Marie Dubois', 2),
-('Projet Écologique Campus', 'Solution pour réduire l\'empreinte carbone', 'Environnement', 'Alice Dupont, Sophie Laurent', 2);
+('Application Mobile SEIC', 'Développement d\'une application mobile pour la SEIC', 'Technologie', 'Keith, Marie Dubois', 2),
+('Projet Écologique Campus', 'Solution pour réduire l\'empreinte carbone', 'Environnement', 'Keith, Sophie Laurent', 2);
 
 INSERT INTO rapports (id_projet, date_soumission, fichier, etat_validation, commentaire) VALUES
 (1, '2023-06-02 10:00:00', 'rapport1.pdf', 'valide', 'Très bon rapport.'),

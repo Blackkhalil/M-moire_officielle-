@@ -1,6 +1,5 @@
-﻿<?php
-require_once __DIR__ . '/../app/auth.php';
-require_once __DIR__ . '/../config/config.php';
+<?php
+require_once __DIR__ . '/bootstrap.php';
 
 if (!is_logged_in()) {
 	header('Location: login.php');
@@ -10,8 +9,8 @@ if (!is_logged_in()) {
 $user = current_user();
 $role = $user['role'] ?? 'visiteur';
 
-// Only admin and organizer can download any report; students could be limited (future)
-if (!in_array($role, ['administrateur','organisateur'])) {
+// Only organisateur can download any report; students could be limited (future)
+if (!in_array($role, ['organisateur'], true)) {
 	http_response_code(403);
 	echo 'Accès non autorisé';
 	exit;

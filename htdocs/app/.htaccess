@@ -1,0 +1,6 @@
+Require all denied
+
+# Autoriser uniquement l'endpoint d'export ZIP
+<Files "export_zip.php">
+    Require all granted
+</Files>

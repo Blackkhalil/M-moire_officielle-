@@ -1,4 +1,5 @@
--- Ajouter le rôle administrateur et créer un compte admin
+-- DEPRECATED : ne pas exécuter. L'organisateur est l'administrateur du site.
+-- Utiliser le compte organisateur (ex. sibikhalil29@gmail.com) à la place.
 ALTER TABLE utilisateurs MODIFY COLUMN role ENUM('etudiant','organisateur','visiteur','administrateur') NOT NULL;
 
 -- Créer un compte administrateur

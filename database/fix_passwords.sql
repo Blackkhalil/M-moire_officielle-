@@ -1,6 +1,6 @@
--- Corriger les mots de passe en les hachant
-UPDATE utilisateurs SET mot_de_passe = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' WHERE email = 'alice@lbs.tg';
-UPDATE utilisateurs SET mot_de_passe = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' WHERE email = 'bob@lbs.tg';
-UPDATE utilisateurs SET mot_de_passe = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' WHERE email = 'visiteur@lbs.tg';
-
--- Tous les mots de passe sont maintenant "test" mais hachés correctement
+-- Corriger les mots de passe en les hachant (mot de passe : test)
+UPDATE utilisateurs SET mot_de_passe = '$2y$10$Wiux2mGwRATIUvSLp9XeQOJvfXX6pLjEYA5v690w2ocA9SyDTN1DC' WHERE email = 'keith@lbs.tg';
+UPDATE utilisateurs SET mot_de_passe = '$2y$10$Wiux2mGwRATIUvSLp9XeQOJvfXX6pLjEYA5v690w2ocA9SyDTN1DC' WHERE email = 'bob@lbs.tg';
+UPDATE utilisateurs SET mot_de_passe = '$2y$10$Wiux2mGwRATIUvSLp9XeQOJvfXX6pLjEYA5v690w2ocA9SyDTN1DC' WHERE email = 'visiteur@lbs.tg';
+UPDATE utilisateurs SET mot_de_passe = '$2y$10$Wiux2mGwRATIUvSLp9XeQOJvfXX6pLjEYA5v690w2ocA9SyDTN1DC' WHERE email = 'marie@lbs.tg';
+UPDATE utilisateurs SET mot_de_passe = '$2y$10$Wiux2mGwRATIUvSLp9XeQOJvfXX6pLjEYA5v690w2ocA9SyDTN1DC' WHERE email = 'sophie@lbs.tg';

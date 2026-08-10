@@ -66,6 +66,40 @@
     
     /* Gradient carte */
     --gradient-card: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+
+    /* ========== ÉCHELLE TYPOGRAPHIQUE ========== */
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 2rem;
+    --font-size-4xl: 2.5rem;
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.6;
+
+    /* ========== ÉCHELLE D'ESPACEMENT ========== */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+
+    /* ========== RAYONS & TRANSITIONS ========== */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 24px;
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
+
+    /* Anneau de focus accessible (clavier) */
+    --focus-ring: 0 0 0 3px rgba(59, 90, 133, 0.35);
 }
 
 * {
@@ -843,6 +877,47 @@ body {
     .visual-card i {
         font-size: 2rem;
     }
+
+    .login-card,
+    .import-card,
+    .export-card {
+        padding: var(--space-5) var(--space-4);
+        border-radius: var(--radius-lg);
+    }
+
+    .login-header,
+    .import-header,
+    .export-header {
+        margin-bottom: var(--space-5);
+    }
+
+    .login-title,
+    .import-title,
+    .export-title {
+        font-size: var(--font-size-2xl);
+    }
+
+    .login-logo-img,
+    .import-icon,
+    .export-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .btn-login-submit,
+    .btn-import-submit,
+    .btn-export-submit {
+        padding: 0.85rem 1.5rem;
+        font-size: var(--font-size-base);
+    }
+
+    .demo-buttons {
+        flex-direction: column;
+    }
+
+    .demo-buttons .btn {
+        width: 100%;
+    }
 }
 
 /* ===== DASHBOARD RESPONSIVE ===== */
@@ -1016,6 +1091,78 @@ html {
     scroll-behavior: smooth;
 }
 
+/* ===== ACCESSIBILITÉ - ÉTATS FOCUS CLAVIER ===== */
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: var(--radius-sm);
+}
+
+.form-control:focus-visible {
+    box-shadow: var(--focus-ring);
+}
+
+/* ===== ÉTAT DE CHARGEMENT (boutons) ===== */
+.btn.is-loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+}
+
+.btn.is-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: btn-spin 0.6s linear infinite;
+}
+
+.btn-outline-primary.is-loading::after,
+.btn-outline-light.is-loading::after,
+.btn-register.is-loading::after {
+    border: 2px solid rgba(59, 90, 133, 0.3);
+    border-top-color: var(--primary-color);
+}
+
+@keyframes btn-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===== TABLEAUX RESPONSIVE ===== */
+.table-responsive {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.table-responsive table {
+    margin-bottom: 0;
+}
+
+@media (max-width: 576px) {
+    .table-responsive {
+        border-radius: var(--radius-sm);
+    }
+
+    .table-responsive th,
+    .table-responsive td {
+        font-size: var(--font-size-sm);
+        padding: 0.5rem 0.6rem;
+        white-space: nowrap;
+    }
+}
+
 /* ===== LOGIN SECTION ===== */
 .login-section {
     padding: 6rem 0;
@@ -1077,9 +1224,10 @@ html {
     background: rgba(220, 38, 38, 0.1);
     border: 1px solid rgba(220, 38, 38, 0.2);
     color: #dc2626;
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 1rem;
-    margin-bottom: 1.5rem;
+    margin: 15px 0 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -1616,22 +1764,6 @@ html {
     color: var(--danger-color);
 }
 
-.login-alert {
-    margin: 15px 0;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.alert-info {
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-    color: #0c5460;
-}
-
-.alert-info i {
-    color: #17a2b8;
-}
-
 /* Animation pour les messages de succès */
 @keyframes slideInSuccess {
     from {
@@ -1714,6 +1846,27 @@ html {
     background-color: rgba(59, 90, 133, 0.1) !important;
     border-color: rgba(59, 90, 133, 0.3) !important;
     color: var(--primary-dark) !important;
+}
+
+.alert-info i {
+    color: var(--primary-color) !important;
+}
+
+/* ===== UTILITAIRES DIVERS ===== */
+.commentaires-list {
+    overflow-y: auto;
+}
+
+.commentaires-list--sm {
+    max-height: 200px;
+}
+
+.commentaires-list--lg {
+    max-height: 300px;
+}
+
+.toast-container-top {
+    z-index: 1080;
 }
 
 .badge-primary,

@@ -1,5 +1,5 @@
-<?php
-require_once __DIR__ . '/../app/gestion_powerpoint.php';
+﻿<?php
+require_once __DIR__ . '/app/gestion_powerpoint.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -8,7 +8,7 @@ require_once __DIR__ . '/../app/gestion_powerpoint.php';
     <title>Gestion des présentations - SEIC LBS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/modern-style.css?v=2.4">
+    <link rel="stylesheet" href="css/modern-style.css?v=2.6">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -138,8 +138,17 @@ require_once __DIR__ . '/../app/gestion_powerpoint.php';
                                             <i class="fa-solid fa-file-powerpoint text-primary me-1"></i>
                                             <strong><?= htmlspecialchars($presentation['nom_fichier']) ?></strong>
                                             <br>
-                                            <small class="text-muted"><?= number_format($presentation['taille_fichier'] / 1024 / 1024, 2) ?> MB</small>
+                                            <small class="text-muted"><?= number_format($presentation['taille_fichier'] / 1024 / 1024, 2) ?> Mo</small>
                                         </div>
+                                        <?php if (!empty($presentation['video_chemin_fichier'])): ?>
+                                            <div class="mt-2">
+                                                <i class="fa-solid fa-video text-danger me-1"></i>
+                                                <small><?= htmlspecialchars($presentation['video_nom_fichier'] ?? 'Vidéo projet') ?></small>
+                                                <?php if (!empty($presentation['video_taille_fichier'])): ?>
+                                                    <br><small class="text-muted"><?= number_format($presentation['video_taille_fichier'] / 1024 / 1024, 2) ?> Mo</small>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </td>
                                     <td>
                                         <small><?= date('d/m/Y H:i', strtotime($presentation['date_soumission'])) ?></small>
@@ -161,9 +170,14 @@ require_once __DIR__ . '/../app/gestion_powerpoint.php';
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="download_powerpoint.php?id=<?= $presentation['id'] ?>" class="btn btn-info btn-sm" title="Télécharger">
+                                            <a href="download_powerpoint.php?id=<?= $presentation['id'] ?>" class="btn btn-info btn-sm" title="Télécharger PowerPoint">
                                                 <i class="fa-solid fa-download"></i>
                                             </a>
+                                            <?php if (!empty($presentation['video_chemin_fichier'])): ?>
+                                                <a href="download_presentation_video.php?id=<?= $presentation['id'] ?>" class="btn btn-outline-danger btn-sm" title="Télécharger la vidéo">
+                                                    <i class="fa-solid fa-video"></i>
+                                                </a>
+                                            <?php endif; ?>
                                             
                                             <?php if ($presentation['etat_validation'] === 'en_attente'): ?>
                                                 <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#validationModal" 
@@ -235,6 +249,9 @@ require_once __DIR__ . '/../app/gestion_powerpoint.php';
             <div class="col-md-6 text-md-end text-center">
                 <a href="https://lome-bs.com/" class="text-white text-decoration-none me-3" target="_blank"><i class="fas fa-globe me-1"></i>Site LBS</a>
                 <a href="mailto:info@lomebs.com" class="text-white text-decoration-none"><i class="fas fa-envelope me-1"></i>Contact</a>
+                <a href="https://www.facebook.com/share/184CCko87w/?mibextid=wwXIfr" class="text-white text-decoration-none ms-3" target="_blank" rel="noopener" aria-label="Facebook LBS"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.linkedin.com/school/lom%C3%A9-business-school/posts/?feedView=all" class="text-white text-decoration-none ms-2" target="_blank" rel="noopener" aria-label="LinkedIn LBS"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/lome_business_school_officiel?igsh=ZGZzMmM0aTBjYzd0" class="text-white text-decoration-none ms-2" target="_blank" rel="noopener" aria-label="Instagram LBS"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </div>

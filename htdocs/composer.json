@@ -1,0 +1,12 @@
+{
+    "name": "seic-lbs/platform",
+    "description": "Plateforme SEIC LBS",
+    "require": {
+        "php": ">=8.0",
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}

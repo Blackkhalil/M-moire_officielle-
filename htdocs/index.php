@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Plateforme SEIC - LBS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/modern-style.css?v=2.4">
+    <link rel="stylesheet" href="css/modern-style.css?v=2.6">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -126,7 +126,7 @@
                             <i class="fas fa-map-marked-alt"></i>
                         </div>
                         <h5 class="feature-title">Plan interactif</h5>
-                        <p class="feature-description">Localisez facilement groupes et salles sur le campus grâce à une carte interactive.</p>
+                        <p class="feature-description">Localisez facilement groupes et salles sur le campus.</p>
                         <div class="feature-badge">Innovant</div>
                     </div>
                 </div>
@@ -265,10 +265,9 @@
                 </div>
                 <div class="col-md-6 text-md-end">
                     <div class="footer-social">
-                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/share/184CCko87w/?mibextid=wwXIfr" class="social-link" target="_blank" rel="noopener" aria-label="Facebook LBS"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/school/lom%C3%A9-business-school/posts/?feedView=all" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn LBS"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/lome_business_school_officiel?igsh=ZGZzMmM0aTBjYzd0" class="social-link" target="_blank" rel="noopener" aria-label="Instagram LBS"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
