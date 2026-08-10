@@ -1,0 +1,3 @@
+# Accès interdit en direct : téléchargements via PHP uniquement
+Require all denied
+Options -Indexes

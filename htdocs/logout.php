@@ -1,8 +1,7 @@
-﻿<?php
-require_once __DIR__ . '/../app/auth.php';
+<?php
+require_once __DIR__ . '/bootstrap.php';
 logout();
-header('Location: login.php');
-exit; 
+redirect_to('login.php'); 
 
 
 

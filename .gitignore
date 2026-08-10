@@ -3,20 +3,27 @@
 Thumbs.db
 desktop.ini
 
-# Fichiers uploadés (ne pas versionner)
-uploads/*
-!uploads/index.php
-uploads/rapports/*
-!uploads/rapports/index.php
-uploads/presentations/*
-!uploads/presentations/index.php
+# Fichiers uploadés (ne pas versionner) — on garde .htaccess/index.php de chaque dossier,
+# donc on "dé-ignore" chaque dossier avant de ré-ignorer son contenu.
+htdocs/uploads/*
+!htdocs/uploads/.htaccess
+!htdocs/uploads/index.php
+!htdocs/uploads/rapports/
+htdocs/uploads/rapports/*
+!htdocs/uploads/rapports/.htaccess
+!htdocs/uploads/rapports/index.php
+!htdocs/uploads/presentations/
+htdocs/uploads/presentations/*
+!htdocs/uploads/presentations/.htaccess
+!htdocs/uploads/presentations/index.php
+!htdocs/uploads/presentation_videos/
+htdocs/uploads/presentation_videos/*
+!htdocs/uploads/presentation_videos/.htaccess
+!htdocs/uploads/presentation_videos/index.php
 
 # Logs
 *.log
 error_log
-
-# Configuration locale (si différente de production)
-# config/config_local.php
 
 # Fichiers temporaires
 *.tmp
@@ -36,7 +43,11 @@ vendor/
 # Variables d'environnement sensibles
 .env
 .env.local
+htdocs/config/db.php
 
 # Dumps SQL (conserver les scripts de migration dans /database)
 *.sql
 !database/*.sql
+
+# Exports / fichiers de config prêts à uploader (contiennent des secrets réels)
+database/exports/

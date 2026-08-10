@@ -1,5 +1,5 @@
-<?php
-require_once __DIR__ . '/../app/projets_edition.php';
+﻿<?php
+require_once __DIR__ . '/app/projets_edition.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -8,7 +8,7 @@ require_once __DIR__ . '/../app/projets_edition.php';
     <title>Projets de l'édition - SEIC LBS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/modern-style.css?v=2.4">
+    <link rel="stylesheet" href="css/modern-style.css?v=2.6">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -91,16 +91,17 @@ require_once __DIR__ . '/../app/projets_edition.php';
                             </td>
                             <td>
                                 <div>
-                                    <strong><?= htmlspecialchars($projet['nom_groupe']) ?></strong>
+                                    <strong><?= htmlspecialchars((string) ($projet['nom_groupe'] ?? '')) ?></strong>
                                     <br>
-                                    <small class="text-muted"><?= htmlspecialchars($projet['nombre_membres']) ?> membre(s)</small>
+                                    <small class="text-muted"><?= htmlspecialchars((string) ($projet['nombre_membres'] ?? 0)) ?> membre(s)</small>
                                 </div>
                             </td>
                             <td>
-                                <small><?= nl2br(htmlspecialchars($projet['membres'])) ?></small>
+                                <small><?= nl2br(htmlspecialchars((string) ($projet['membres'] ?? ''))) ?></small>
                             </td>
                             <td>
-                                <small><?= htmlspecialchars(substr($projet['description'], 0, 100)) ?><?= strlen($projet['description']) > 100 ? '...' : '' ?></small>
+                                <?php $projet_description = (string) ($projet['description'] ?? ''); ?>
+                                <small><?= htmlspecialchars(substr($projet_description, 0, 100)) ?><?= strlen($projet_description) > 100 ? '...' : '' ?></small>
                             </td>
                             <td>
                                 <?php $pres = $presentations_map[$projet['id']] ?? null; ?>
@@ -145,7 +146,7 @@ require_once __DIR__ . '/../app/projets_edition.php';
                                     </div>
                                     
                                     <div class="collapse" id="commentaires-projet-<?= $projet['id'] ?>">
-                                        <div class="commentaires-list mt-2" style="max-height: 300px; overflow-y: auto;">
+                                        <div class="commentaires-list commentaires-list--lg mt-2">
                                             <?php if (!empty($projet['commentaires'])): ?>
                                                 <?php foreach ($projet['commentaires'] as $commentaire): ?>
                                                     <div class="card mb-2 p-2">
@@ -212,6 +213,9 @@ require_once __DIR__ . '/../app/projets_edition.php';
             <div class="col-md-6 text-md-end text-center">
                 <a href="https://lome-bs.com/" class="text-white text-decoration-none me-3" target="_blank"><i class="fas fa-globe me-1"></i>Site LBS</a>
                 <a href="mailto:info@lomebs.com" class="text-white text-decoration-none"><i class="fas fa-envelope me-1"></i>Contact</a>
+                <a href="https://www.facebook.com/share/184CCko87w/?mibextid=wwXIfr" class="text-white text-decoration-none ms-3" target="_blank" rel="noopener" aria-label="Facebook LBS"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.linkedin.com/school/lom%C3%A9-business-school/posts/?feedView=all" class="text-white text-decoration-none ms-2" target="_blank" rel="noopener" aria-label="LinkedIn LBS"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/lome_business_school_officiel?igsh=ZGZzMmM0aTBjYzd0" class="text-white text-decoration-none ms-2" target="_blank" rel="noopener" aria-label="Instagram LBS"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </div>

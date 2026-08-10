@@ -1,4 +1,0 @@
-# Sécuriser le dossier uploads (accès uniquement via scripts PHP contrôlés)
-Require all denied
-Options -Indexes
-

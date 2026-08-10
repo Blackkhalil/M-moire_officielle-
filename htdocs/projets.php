@@ -1,5 +1,5 @@
-<?php
-require_once __DIR__ . '/../app/projets.php';
+﻿<?php
+require_once __DIR__ . '/app/projets.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -8,7 +8,7 @@ require_once __DIR__ . '/../app/projets.php';
     <title>Gestion des projets - SEIC LBS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/modern-style.css?v=2.4">
+    <link rel="stylesheet" href="css/modern-style.css?v=2.6">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -99,9 +99,9 @@ require_once __DIR__ . '/../app/projets.php';
                                 </small>
                             <?php endif; ?>
                         </td>
-                        <td><?= htmlspecialchars($projet['description']) ?></td>
-                        <td><?= htmlspecialchars($projet['categorie']) ?></td>
-                        <td><?= htmlspecialchars($projet['membres']) ?></td>
+                        <td><?= htmlspecialchars((string) ($projet['description'] ?? '')) ?></td>
+                        <td><?= htmlspecialchars((string) ($projet['categorie'] ?? '')) ?></td>
+                        <td><?= htmlspecialchars((string) ($projet['membres'] ?? '')) ?></td>
                         <td><?= htmlspecialchars($projet['id_edition']) ?></td>
                         <td>
                             <a href="?supprimer=<?= $projet['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ce projet ?')"><i class="fa-solid fa-trash"></i></a>
@@ -121,7 +121,7 @@ require_once __DIR__ . '/../app/projets.php';
                             <div class="collapse" id="commentaires-<?= $projet['id'] ?>">
                                 <div class="p-3">
                                     <h6 class="mb-2"><i class="fa-solid fa-comments me-1"></i>Commentaires des visiteurs</h6>
-                                    <div class="commentaires-list" style="max-height: 300px; overflow-y: auto;">
+                                    <div class="commentaires-list commentaires-list--lg">
                                         <?php foreach ($projet['commentaires'] as $commentaire): ?>
                                             <div class="card mb-2 p-2">
                                                 <div class="d-flex justify-content-between">
@@ -161,6 +161,9 @@ require_once __DIR__ . '/../app/projets.php';
             <div class="col-md-6 text-md-end text-center">
                 <a href="https://lome-bs.com/" class="text-white text-decoration-none me-3" target="_blank"><i class="fas fa-globe me-1"></i>Site LBS</a>
                 <a href="mailto:info@lomebs.com" class="text-white text-decoration-none"><i class="fas fa-envelope me-1"></i>Contact</a>
+                <a href="https://www.facebook.com/share/184CCko87w/?mibextid=wwXIfr" class="text-white text-decoration-none ms-3" target="_blank" rel="noopener" aria-label="Facebook LBS"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.linkedin.com/school/lom%C3%A9-business-school/posts/?feedView=all" class="text-white text-decoration-none ms-2" target="_blank" rel="noopener" aria-label="LinkedIn LBS"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/lome_business_school_officiel?igsh=ZGZzMmM0aTBjYzd0" class="text-white text-decoration-none ms-2" target="_blank" rel="noopener" aria-label="Instagram LBS"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </div>

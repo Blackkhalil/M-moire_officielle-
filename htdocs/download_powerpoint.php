@@ -1,10 +1,8 @@
 <?php
-require_once __DIR__ . '/../app/auth.php';
-if (!is_logged_in() || !in_array(current_user()['role'], ['organisateur', 'administrateur'])) {
-    header('Location: login.php');
-    exit;
+require_once __DIR__ . '/bootstrap.php';
+if (!is_logged_in() || !is_organisateur()) {
+    redirect_to('login.php');
 }
-require_once __DIR__ . '/../config/config.php';
 
 $presentation_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
