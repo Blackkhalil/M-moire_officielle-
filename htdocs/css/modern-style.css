@@ -1143,7 +1143,8 @@ textarea:focus-visible,
 /* ===== TABLEAUX RESPONSIVE ===== */
 .table-responsive {
     border-radius: var(--radius-md);
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .table-responsive table {

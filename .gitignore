@@ -44,6 +44,7 @@ vendor/
 .env
 .env.local
 htdocs/config/db.php
+htdocs/config/mail.php
 
 # Dumps SQL (conserver les scripts de migration dans /database)
 *.sql

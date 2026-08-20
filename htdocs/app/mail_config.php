@@ -1,21 +1,44 @@
 <?php
 /**
  * Configuration e-mail SMTP (sandbox local via Mailtrap / live production).
- * Les réglages MAILTRAP_* sont des réglages SMTP génériques (host/port/user/pass) :
- * en production, ils peuvent pointer vers Mailtrap OU tout autre serveur SMTP
- * (ex. Gmail : smtp.gmail.com), le nom des variables reste MAILTRAP_* pour
- * ne pas casser la config existante.
+ *
+ * Deux sources possibles, dans cet ordre de priorité :
+ * 1. config/mail.php (gitignored, comme config/db.php) si ce fichier existe :
+ *    valeurs SMTP codées en dur, aucun .env nécessaire.
+ * 2. Sinon, repli sur les variables MAILTRAP_* lues depuis .env (ancien
+ *    fonctionnement, toujours actif en local si config/mail.php est absent).
  */
 require_once __DIR__ . '/../config/config.php';
 
+$mail_config_file = __DIR__ . '/../config/mail.php';
+if (is_file($mail_config_file)) {
+    require_once $mail_config_file;
+}
+
 function mail_mode(): string
 {
+    if (defined('SMTP_MODE')) {
+        return SMTP_MODE;
+    }
     $mode = strtolower((string) env_value('MAIL_MODE', APP_ENV === 'production' ? 'live' : 'sandbox'));
     return in_array($mode, ['sandbox', 'live'], true) ? $mode : 'sandbox';
 }
 
 function mailtrap_settings(): array
 {
+    if (defined('SMTP_HOST')) {
+        return [
+            'mode' => mail_mode(),
+            'host' => SMTP_HOST,
+            'port' => (int) SMTP_PORT,
+            'user' => SMTP_USER,
+            'pass' => SMTP_PASS,
+            'from_email' => SMTP_FROM_EMAIL,
+            'from_name' => SMTP_FROM_NAME,
+            'encryption' => strtolower(SMTP_ENCRYPTION),
+        ];
+    }
+
     $isSandbox = mail_mode() === 'sandbox';
 
     return [
@@ -43,6 +66,10 @@ function configure_phpmailer_smtp(PHPMailer\PHPMailer\PHPMailer $mail, array $se
     $mail->Port = $settings['port'];
     $mail->CharSet = PHPMailer\PHPMailer\PHPMailer::CHARSET_UTF8;
     $mail->Timeout = 20;
+    // Évite la signature "PHPMailer x.y.z" dans les en-têtes, un signal souvent
+    // associé aux scripts d'envoi de masse par les filtres anti-spam.
+    $mail->XMailer = ' ';
+    $mail->addReplyTo($settings['from_email'], $settings['from_name']);
 
     $encryption = $settings['encryption'];
     if ($encryption === 'ssl' || $encryption === 'smtps') {

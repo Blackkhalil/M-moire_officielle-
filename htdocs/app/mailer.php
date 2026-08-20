@@ -48,6 +48,18 @@ function send_app_mail(string $to, string $subject, string $htmlBody, ?string $t
     }
 }
 
+/**
+ * URL absolue (avec domaine) pour les liens cliqués depuis un client e-mail.
+ * url_to() seul ne suffit pas ici : BASE_URL vaut '/' en production (chemin relatif,
+ * correct pour les liens internes aux pages, mais invalide dans un e-mail où il n'y a
+ * pas de page d'origine pour le résoudre).
+ */
+function mail_url_to(string $path = ''): string
+{
+    $siteUrl = env_value('SITE_URL', 'http://localhost/M-moire_officielle-/htdocs');
+    return rtrim($siteUrl, '/') . '/' . ltrim($path, '/');
+}
+
 /** Enveloppe HTML commune (en-tête bleu nuit LBS, corps, pied de page) pour tous les templates. */
 function render_email_template(string $title, string $bodyHtml): string
 {
@@ -92,7 +104,7 @@ function send_welcome_email(string $toEmail, string $toName): bool
     $body = '<p>Bonjour ' . htmlspecialchars($toName, ENT_QUOTES, 'UTF-8') . ',</p>'
         . '<p>Votre compte sur la plateforme <strong>SEIC LBS</strong> a bien été créé. Bienvenue !</p>'
         . '<p>Vous pouvez dès à présent vous connecter et accéder à votre espace.</p>'
-        . email_button(url_to('login.php'), 'Se connecter');
+        . email_button(mail_url_to('login.php'), 'Se connecter');
 
     return send_app_mail(
         $toEmail,
