@@ -36,7 +36,7 @@ function notify_organizers_of_rapport_submission(PDO $pdo, int $id_projet): void
         'rapport',
         (string) (current_user()['nom'] ?? ''),
         $projetNom,
-        url_to('rapports_admin.php')
+        mail_url_to('rapports_admin.php')
     );
 }
 

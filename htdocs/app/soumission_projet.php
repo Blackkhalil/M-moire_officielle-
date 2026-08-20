@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'projet',
                 (string) (current_user()['nom'] ?? ''),
                 $nom,
-                url_to('projets.php')
+                mail_url_to('projets.php')
             );
         } else {
             $error = 'Erreur lors de la soumission.';

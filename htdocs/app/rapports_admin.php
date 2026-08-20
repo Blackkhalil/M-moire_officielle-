@@ -42,7 +42,7 @@ function notify_student_of_rapport_validation(PDO $pdo, $rapport_id, string $sta
             'rapport',
             $row['projet_nom'],
             $status,
-            url_to('suivi_soumissions.php'),
+            mail_url_to('suivi_soumissions.php'),
             $commentaire !== '' ? $commentaire : null
         );
     }

@@ -28,7 +28,7 @@ function notify_student_of_powerpoint_validation(PDO $pdo, $presentation_id, str
             'powerpoint',
             $row['projet_nom'],
             $status,
-            url_to('suivi_soumissions.php'),
+            mail_url_to('suivi_soumissions.php'),
             $commentaire !== '' ? $commentaire : null
         );
     }

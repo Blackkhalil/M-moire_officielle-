@@ -195,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             'powerpoint',
                             (string) (current_user()['nom'] ?? ''),
                             $projetNom,
-                            url_to('gestion_powerpoint.php')
+                            mail_url_to('gestion_powerpoint.php')
                         );
                     }
                 }
