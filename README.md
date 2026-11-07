@@ -1,34 +1,34 @@
 # SEIC LBS - Système de Gestion des Projets Étudiants
 
-## 📋 Description
+##  Description
 
 **SEIC LBS** est une application web complète développée en PHP pour la gestion des projets étudiants lors du Salon de l'Innovation et de l'Entrepreneuriat (SEIC) de l'École de Commerce LBS.
 
 Cette application permet aux étudiants de soumettre leurs projets, rapports PDF et présentations PowerPoint, aux organisateurs de les valider ou refuser avec des commentaires, avec des notifications automatiques par e-mail à chaque étape.
 
-## ✨ Fonctionnalités Principales
+##  Fonctionnalités Principales
 
-### 👨‍🎓 Pour les Étudiants
+###  Pour les Étudiants
 - **Soumission de projets** : titre, description, catégorie, groupe
 - **Soumission de rapports PDF** : Upload sécurisé avec validation de format
 - **Soumission de présentations PowerPoint** : Support des fichiers .ppt/.pptx (+ vidéo optionnelle)
 - **Suivi des soumissions** : Tableau de bord personnel avec statuts de validation
 - **E-mail de bienvenue** à l'inscription et **e-mail de notification** dès qu'un rapport ou une présentation est validé(e) ou refusé(e)
 
-### 👨‍💼 Pour les Organisateurs
+###  Pour les Organisateurs
 - **Gestion des rapports et présentations** : Validation/refus avec commentaires personnalisés
 - **Notification automatique par e-mail** dès qu'un étudiant soumet un projet, un rapport ou une présentation
 - **Statistiques détaillées** : Tableaux de bord avec métriques de soumission
 - **Gestion des projets, éditions, groupes et salles**
 
-### 🔧 Fonctionnalités Techniques
+###  Fonctionnalités Techniques
 - **Authentification sécurisée** : sessions PHP, CSRF, hachage bcrypt, rôles (étudiant/organisateur/visiteur)
 - **Upload sécurisé** : Validation des fichiers et noms uniques
 - **E-mails transactionnels** : PHPMailer + SMTP Mailtrap (sandbox en local, live en production)
 - **Interface responsive** : Bootstrap 5 + design system CSS maison (`htdocs/css/modern-style.css`)
 - **Zéro build** : PHP pur, pas de bundler/JS build (Bootstrap et Font Awesome via CDN)
 
-## 🚀 Installation locale (WAMP)
+##  Installation locale (WAMP)
 
 ### Prérequis
 - **PHP 8.0+** avec extensions : PDO MySQL, mysqli
@@ -56,7 +56,7 @@ Cette application permet aux étudiants de soumettre leurs projets, rapports PDF
 5. **Accéder à l'application**
    - `http://localhost/<nom-du-dossier>/htdocs/index.php`
 
-## 📁 Structure du Projet
+##  Structure du Projet
 
 Tout ce dont l'application a besoin pour tourner (code métier, config, dépendances, uploads, logs) vit **à l'intérieur** de `htdocs/` — c'est volontaire : ça permet de déployer sur n'importe quel hébergement mutualisé, y compris les offres gratuites qui interdisent à PHP de lire des fichiers en dehors du dossier public (`open_basedir`). Chaque sous-dossier sensible (`app/`, `config/`, `vendor/`, `uploads/`, `logs/`) a son propre `.htaccess` qui bloque l'accès direct par navigateur (`Require all denied`) — seul PHP peut les lire via `require`/`include`, jamais un visiteur via une URL.
 
@@ -86,7 +86,7 @@ M-moire_officielle-/
 └── composer.phar               # Composer local (optionnel)
 ```
 
-## 🔧 Configuration
+##  Configuration
 
 ### Base de données
 `htdocs/config/db.php` (à créer depuis `htdocs/config/db.example.php`) définit `DB_HOST`/`DB_NAME`/`DB_USER`/`DB_PASS` selon `ENV = 'local'` ou `'production'`. `htdocs/config/config.php` lit ensuite ces valeurs (avec possibilité de les surcharger via `.env`, voir `htdocs/config/env.example.txt`).
@@ -113,7 +113,7 @@ L'organisateur qui reçoit les notifications de soumission est déterminé dynam
 3. Valider ou refuser avec un commentaire
 4. L'étudiant reçoit un e-mail automatique avec la décision
 
-## 🔒 Sécurité
+##  Sécurité
 
 - **Validation des fichiers** : extensions, taille, contenu
 - **Protection contre l'injection SQL** : requêtes préparées PDO partout
@@ -122,7 +122,7 @@ L'organisateur qui reçoit les notifications de soumission est déterminé dynam
 - **Secrets hors dépôt** : `.env` et `config/db.php` sont gitignorés, seuls les fichiers `.example` sont versionnés
 - **Dossiers sensibles protégés par `.htaccess`** (`Require all denied`) : `app/`, `config/`, `vendor/`, `uploads/`, `logs/` sont dans le dossier public mais inaccessibles par URL directe — seul PHP peut les lire via `require`/`include`
 
-## 🚀 Déploiement (hébergement mutualisé gratuit ou payant)
+##  Déploiement (hébergement mutualisé gratuit ou payant)
 
 Ce projet est un PHP « zéro build » (pas de bundler, pas de `npm run build`), et **tout tient dans `htdocs/`** — conçu pour fonctionner tel quel sur n'importe quel hébergement mutualisé, y compris les offres gratuites (InfinityFree, 000webhost, ByetHost...) qui restreignent PHP au seul dossier public (`open_basedir`). Il suffit d'uploader le contenu de `htdocs/` dans le dossier public de l'hébergeur (souvent nommé `public_html`, parfois `htdocs` ou `www` — peu importe le nom, seul son *contenu* compte).
 
@@ -143,7 +143,7 @@ Ce projet est un PHP « zéro build » (pas de bundler, pas de `npm run build`),
    - Vérifier `logs/php_errors.log` (aucune erreur SMTP/DB)
    - Confirmer que `display_errors` est désactivé (`APP_ENV=production` le fait automatiquement dans `config/config.php`)
 
-## 🤝 Contribution
+##  Contribution
 
 1. Fork le projet
 2. Créer une branche feature (`git checkout -b feature/nouvelle-fonctionnalite`)
@@ -151,11 +151,11 @@ Ce projet est un PHP « zéro build » (pas de bundler, pas de `npm run build`),
 4. Push vers la branche (`git push origin feature/nouvelle-fonctionnalite`)
 5. Créer une Pull Request
 
-## 📄 Licence
+##  Licence
 
 Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
-## 👨‍💻 Auteur
+##  Auteur
 
 **Khalil**
 - Email : sibikhalil06@gmail.com
