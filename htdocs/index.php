@@ -72,7 +72,7 @@
                     <span class="title-accent">Lomé Business School</span>
                 </h1>
                 <p class="hero-subtitle">
-                    Innovation, Entrepreneuriat et Impact Social<br>
+                    Semaine de l’Entrepreneuriat, de l’Innovation et de la Créativité<br>
                     Un espace moderne pour gérer, collaborer et réussir la SEIC
                 </p>
                 <div class="hero-actions">
@@ -88,16 +88,16 @@
             </div>
             <div class="hero-stats">
                 <div class="stat-item">
-                    <div class="stat-number">500+</div>
-                    <div class="stat-label">Projets</div>
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Profils : étudiant, organisateur, visiteur</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Éditions</div>
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Dépôts : projet, rapport, présentation</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">1000+</div>
-                    <div class="stat-label">Utilisateurs</div>
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Circuit : dépôt, validation, notification</div>
                 </div>
             </div>
         </div>
@@ -262,7 +262,7 @@
             <hr class="footer-divider">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <p class="footer-copyright">© 2024 Lomé Business School — Plateforme SEIC</p>
+                    <p class="footer-copyright">© <?= date('Y') ?> Lomé Business School — Plateforme SEIC</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <div class="footer-social">

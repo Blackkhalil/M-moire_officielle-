@@ -1,5 +1,17 @@
 # 📝 Journal des modifications
 
+## Novembre 2026 - Restructuration du dépôt
+
+- Documentation rangée dans `docs/` (architecture, diagrammes, guide de déploiement).
+- Base de données : un seul schéma à jour (`database/schema.sql`, 12 tables) et des données de démonstration séparées (`database/demo.sql`). Les anciens scripts partiels sont retirés, avec les adresses et mots de passe qu'ils contenaient.
+- Installation plus sûre : `database/setup_wamp.php` ne supprime plus une base existante sans l'option `--reinitialiser`, et crée aussi la table de réinitialisation des mots de passe.
+- PHPMailer est fourni avec le projet (`htdocs/vendor`) ; `composer.phar` est retiré.
+- Page d'accueil : les compteurs décoratifs (« 500+ projets… ») sont remplacés par des informations exactes.
+- Année du copyright calculée automatiquement dans toutes les pages.
+- Port MySQL configurable (`DB_PORT`).
+- README réécrit : la SEIC est la Semaine de l'Entrepreneuriat, de l'Innovation et de la Créativité.
+- `DEMARRER_PROJET.bat` lance WampServer s'il est arrêté, puis ouvre le projet.
+
 ## Version actuelle - Améliorations majeures
 
 ### ✅ Fonctionnalités ajoutées

@@ -76,6 +76,7 @@ if (!is_dir($log_dir)) {
 ini_set('error_log', $log_dir . DIRECTORY_SEPARATOR . 'php_errors.log');
 
 $pdo_db_host = env_value('DB_HOST', DB_HOST);
+$pdo_db_port = env_value('DB_PORT', defined('DB_PORT') ? (string) DB_PORT : '');
 $pdo_db_name = env_value('DB_NAME', DB_NAME);
 $pdo_db_user = env_value('DB_USER', DB_USER);
 $pdo_db_pass = env_value('DB_PASS', DB_PASS);
@@ -100,7 +101,7 @@ function redirect_to(string $path): void {
 
 try {
     $pdo = new PDO(
-        'mysql:host=' . $pdo_db_host . ';dbname=' . $pdo_db_name . ';charset=utf8mb4',
+        'mysql:host=' . $pdo_db_host . ($pdo_db_port !== '' ? ';port=' . (int) $pdo_db_port : '') . ';dbname=' . $pdo_db_name . ';charset=utf8mb4',
         $pdo_db_user,
         $pdo_db_pass,
         [

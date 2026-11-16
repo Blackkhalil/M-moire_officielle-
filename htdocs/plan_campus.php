@@ -4,7 +4,7 @@ if (!is_logged_in()) {
     redirect_to_login();
 }
 $salles = $pdo->query('SELECT * FROM salles ORDER BY nom')->fetchAll(PDO::FETCH_ASSOC);
-$groupes = $pdo->query('SELECT g.*, s.nom AS salle_nom FROM groupes g JOIN salles s ON g.id_salle = s.id')->fetchAll(PDO::FETCH_ASSOC);
+$groupes = $pdo->query('SELECT g.*, s.nom AS salle_nom, e.annee FROM groupes g JOIN salles s ON g.id_salle = s.id LEFT JOIN editions e ON g.id_edition = e.id ORDER BY g.nom')->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -82,7 +82,7 @@ $groupes = $pdo->query('SELECT g.*, s.nom AS salle_nom FROM groupes g JOIN salle
                             <?php foreach ($groupes as $groupe): ?>
                                 <tr>
                                     <td><span class="badge bg-primary fs-6"><?= htmlspecialchars($groupe['nom']) ?></span></td>
-                                    <td><?= htmlspecialchars($groupe['annee']) ?></td>
+                                    <td><?= htmlspecialchars((string) ($groupe['annee'] ?? '')) ?></td>
                                     <td><?= htmlspecialchars($groupe['salle_nom']) ?></td>
                                 </tr>
                             <?php endforeach; ?>
@@ -103,7 +103,7 @@ $groupes = $pdo->query('SELECT g.*, s.nom AS salle_nom FROM groupes g JOIN salle
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-md-start text-center mb-2 mb-md-0">
-                <strong>© 2024 Lomé Business School</strong> — Plateforme SEIC
+                <strong>© <?= date('Y') ?> Lomé Business School</strong> — Plateforme SEIC
             </div>
             <div class="col-md-6 text-md-end text-center">
                 <a href="https://lome-bs.com/" class="text-white text-decoration-none me-3" target="_blank"><i class="fas fa-globe me-1"></i>Site LBS</a>

@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-md-start text-center mb-2 mb-md-0">
-                <strong>&copy; 2024 Lomé Business School</strong> — Plateforme SEIC
+                <strong>&copy; <?= date('Y') ?> Lomé Business School</strong> — Plateforme SEIC
             </div>
             <div class="col-md-6 text-md-end text-center">
                 <a href="https://lome-bs.com/" class="text-white text-decoration-none me-3" target="_blank" rel="noopener"><i class="fas fa-globe me-1"></i>Site LBS</a>

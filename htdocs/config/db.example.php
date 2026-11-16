@@ -18,6 +18,7 @@ if (ENV === 'local') {
     define('DB_USER', 'root');
     define('DB_PASS', '');
     define('DB_NAME', 'seic_lbs');
+    define('DB_PORT', 3306); // WAMP : 3306 pour MySQL, 3307 pour MariaDB
 } else {
     // Renseigner depuis le panneau MySQL de l'hébergeur (host souvent "localhost"
     // en mutualisé classique, ou une adresse distante type "sqlXXX.hebergeur.com"
@@ -26,10 +27,11 @@ if (ENV === 'local') {
     define('DB_USER', 'CHANGE_ME');
     define('DB_PASS', 'CHANGE_ME');
     define('DB_NAME', 'CHANGE_ME');
+    define('DB_PORT', 3306);
 }
 
 mysqli_report(MYSQLI_REPORT_OFF);
-$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 if ($conn->connect_error) {
     if (ENV === 'production') {
         error_log('MySQL connection failed: ' . $conn->connect_error);
